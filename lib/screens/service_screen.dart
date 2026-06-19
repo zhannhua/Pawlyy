@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'service_detail_screen.dart';
+import 'location_screen.dart'; // <-- IMPORT ADDED HERE
 
 class ServiceScreen extends StatelessWidget {
   const ServiceScreen({super.key});
@@ -6,58 +8,58 @@ class ServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        title: const Text(
-          "Grooming Services",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          // 1. Search and Filter Bar
-          Container(
-            padding: const EdgeInsets.all(16),
-            color: Colors.white,
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Search in Klang Valley...",
-                      prefixIcon: const Icon(Icons.search),
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                    ),
+      backgroundColor: Colors.white, // Ultra-clean pure white background
+      body: SafeArea(
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(), // Native bounce effect
+          slivers: [
+            // 1. Modern Immersive Header
+            SliverAppBar(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              pinned: true,
+              expandedHeight: 120.0,
+              flexibleSpace: const FlexibleSpaceBar(
+                titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                title: Text(
+                  "Services",
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -1.0,
+                    fontSize: 28,
                   ),
                 ),
-                const SizedBox(width: 12),
-                IconButton(
-                  icon: const Icon(Icons.filter_list),
-                  onPressed: () {
-                    // Future: Open filter bottom sheet (Distance, Price, Rating)
-                  },
-                  style: IconButton.styleFrom(
-                    backgroundColor: Colors.blue[50],
-                    foregroundColor: Colors.blue,
+              ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: IconButton(
+                    icon: const Icon(Icons.map_outlined, color: Colors.black87),
+                    // 👇 NAVIGATION ADDED HERE 👇
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LocationScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
             ),
-          ),
 
-          // 2. Service List with Trust System
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: const [
-                ServiceItem(
+            // 2. Search & Filter Bar
+            SliverToBoxAdapter(
+              child: _buildSearchBar(context),
+            ),
+
+            // 3. Apple-Style Minimalist List
+            SliverList(
+              delegate: SliverChildListDelegate([
+                const SizedBox(height: 16),
+                const _AppleStyleServiceCard(
                   name: "Happy Paw Grooming",
                   type: "Premium Grooming",
                   basePrice: "RM 50",
@@ -66,7 +68,8 @@ class ServiceScreen extends StatelessWidget {
                   isVerified: true,
                   distance: "2.5 km",
                 ),
-                ServiceItem(
+                Divider(height: 1, color: Colors.grey.shade200, indent: 110), // Indented divider!
+                const _AppleStyleServiceCard(
                   name: "Fluffy Bubbles Pet Salon",
                   type: "Basic Bath & Trim",
                   basePrice: "RM 35",
@@ -75,7 +78,8 @@ class ServiceScreen extends StatelessWidget {
                   isVerified: true,
                   distance: "3.1 km",
                 ),
-                ServiceItem(
+                Divider(height: 1, color: Colors.grey.shade200, indent: 110),
+                const _AppleStyleServiceCard(
                   name: "Urban Tails Barkery",
                   type: "Full Grooming",
                   basePrice: "RM 80",
@@ -84,7 +88,52 @@ class ServiceScreen extends StatelessWidget {
                   isVerified: false,
                   distance: "5.0 km",
                 ),
-              ],
+                const SizedBox(height: 40), // Bottom padding
+              ]),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Modern Flat Search Bar
+  Widget _buildSearchBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100, // Flat grey, no shadow
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Search Klang Valley...",
+                  hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 16, fontWeight: FontWeight.w500),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey.shade600),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.tune),
+              onPressed: () {},
+              color: Colors.black87,
+              padding: const EdgeInsets.all(16),
             ),
           ),
         ],
@@ -93,7 +142,8 @@ class ServiceScreen extends StatelessWidget {
   }
 }
 
-class ServiceItem extends StatelessWidget {
+// 3. Ultra-Clean Minimalist Service Card
+class _AppleStyleServiceCard extends StatefulWidget {
   final String name;
   final String type;
   final String basePrice;
@@ -102,8 +152,7 @@ class ServiceItem extends StatelessWidget {
   final bool isVerified;
   final String distance;
 
-  const ServiceItem({
-    super.key,
+  const _AppleStyleServiceCard({
     required this.name,
     required this.type,
     required this.basePrice,
@@ -114,120 +163,169 @@ class ServiceItem extends StatelessWidget {
   });
 
   @override
+  State<_AppleStyleServiceCard> createState() => _AppleStyleServiceCardState();
+}
+
+class _AppleStyleServiceCardState extends State<_AppleStyleServiceCard> {
+  bool _isSaved = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.only(bottom: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ServiceDetailScreen(
+              shopName: widget.name,
+              isVerified: widget.isVerified,
+            ),
+          ),
+        );
+      },
       child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Shop Image Placeholder
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.blue[50],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(Icons.store, color: Colors.blue, size: 40),
-                ),
-                const SizedBox(width: 16),
+            // Crisp Rounded Image Icon
+            Container(
+              width: 70,
+              height: 70,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.1)),
+              ),
+              child: Icon(Icons.storefront, color: Theme.of(context).colorScheme.primary, size: 32),
+            ),
+            const SizedBox(width: 16),
 
-                // Details
-                Expanded(
-                  child: Column(
+            // Content
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title Row with Heart
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                widget.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 18,
+                                  letterSpacing: -0.5,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          // Trust Element: Verified Badge
-                          if (isVerified)
-                            const Icon(Icons.verified, color: Colors.blue, size: 18),
-                        ],
+                            const SizedBox(width: 4),
+                            if (widget.isVerified)
+                              const Icon(Icons.verified, color: Colors.blue, size: 16),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "$type • $distance",
-                        style: TextStyle(color: Colors.grey[600], fontSize: 13),
-                      ),
-                      const SizedBox(height: 8),
 
-                      // Trust Element: Ratings Breakdown
-                      Row(
-                        children: [
-                          const Icon(Icons.star, color: Colors.amber, size: 16),
-                          const SizedBox(width: 4),
-                          Text(
-                            rating,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                      // Animated Heart
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isSaved = !_isSaved;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                _isSaved ? "Saved to favorites! ❤️" : "Removed from favorites.",
+                                style: const TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              behavior: SnackBarBehavior.floating,
+                              duration: const Duration(seconds: 1),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            ),
+                          );
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          child: Icon(
+                            _isSaved ? Icons.favorite : Icons.favorite_border,
+                            color: _isSaved ? Colors.red : Colors.grey.shade400,
+                            size: 24,
                           ),
-                          Text(
-                            " ($reviewCount reviews)",
-                            style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            const Divider(height: 24),
+                  const SizedBox(height: 2),
 
-            // Call to Action & Transparent Pricing
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Starting from",
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
-                    ),
-                    Text(
-                      basePrice,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                  // Subtitle
+                  Text(
+                    widget.type,
+                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
                   ),
-                  onPressed: () {
-                    // Future: Open individual shop menu/catalog
-                  },
-                  child: const Text("View Prices & Book"),
-                ),
-              ],
+                  const SizedBox(height: 6),
+
+                  // Minimalist Stats
+                  Row(
+                    children: [
+                      const Icon(Icons.star_rounded, color: Colors.amber, size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        "${widget.rating} (${widget.reviewCount})",
+                        style: TextStyle(color: Colors.grey[700], fontSize: 13, fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text("•", style: TextStyle(color: Colors.grey[400])),
+                      ),
+                      Text(
+                        widget.distance,
+                        style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Price & Pill Button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.basePrice,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 18,
+                          color: Colors.black87,
+                        ),
+                      ),
+
+                      // Apple-Style Pill Button
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          "Book",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

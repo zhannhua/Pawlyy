@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui'; // Required for the Frosted Glass blur effect!
 
 import 'screens/home_screen.dart';
 import 'screens/service_screen.dart';
@@ -10,7 +11,12 @@ import 'package:provider/provider.dart';
 import 'providers/pet_provider.dart';
 
 void main() {
-  runApp(const PawlyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => PetProvider(),
+      child: const PawlyApp(),
+    ),
+  );
 }
 
 class PawlyApp extends StatelessWidget {
@@ -21,10 +27,9 @@ class PawlyApp extends StatelessWidget {
     return MaterialApp(
       title: "Pawly",
       debugShowCheckedModeBanner: false,
-      // 1. Global Brand Theme
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: Colors.grey[50],
+        scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFFFF9800),
           primary: const Color(0xFFFF9800),
@@ -34,28 +39,8 @@ class PawlyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black87,
           elevation: 0,
+          scrolledUnderElevation: 0,
           centerTitle: false,
-        ),
-        // FIXED: Changed CardTheme to CardThemeData
-        cardTheme: CardThemeData(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFFF9800),
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            textStyle: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
         ),
       ),
       home: const MainNavigation(),
@@ -76,7 +61,7 @@ class _MainNavigationState extends State<MainNavigation> {
   final pages = const [
     HomeScreen(),
     ServiceScreen(),
-    TrackerScreen(), // Future: Replace with dedicated Tracker Screen
+    TrackerScreen(),
     PetScreen(),
     ProfileScreen(),
   ];
@@ -84,43 +69,86 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+      extendBody: true, // CRITICAL: This allows the page to scroll BEHIND the frosted glass bar!
       body: pages[currentIndex],
-      // 2. Updated Bottom Navigation Strategy
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        indicatorColor: const Color(0xFFFF9800).withOpacity(0.2),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home, color: Color(0xFFFF9800)),
-            label: 'Home',
+
+      // Enriched Apple-Style Frosted Glass Navigation Bar
+      bottomNavigationBar: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20), // Apple-style heavy blur
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.85), // Semi-transparent
+              border: Border(
+                top: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1),
+              ),
+            ),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildNavItem(Icons.home_outlined, Icons.home, 'Home', 0),
+                    _buildNavItem(Icons.store_outlined, Icons.store, 'Book', 1),
+                    _buildNavItem(Icons.monitor_heart_outlined, Icons.monitor_heart, 'Tracker', 2),
+                    _buildNavItem(Icons.pets_outlined, Icons.pets, 'My Pets', 3),
+                    _buildNavItem(Icons.person_outline, Icons.person, 'Profile', 4),
+                  ],
+                ),
+              ),
+            ),
           ),
-          NavigationDestination(
-            icon: Icon(Icons.store_outlined),
-            selectedIcon: Icon(Icons.store, color: Color(0xFFFF9800)),
-            label: 'Book', // Changed from "Services" for a clearer call-to-action
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.monitor_heart_outlined),
-            selectedIcon: Icon(Icons.monitor_heart, color: Color(0xFFFF9800)),
-            label: 'Tracker', // Shifted focus from "Community" to "Tracker"
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.pets_outlined),
-            selectedIcon: Icon(Icons.pets, color: Color(0xFFFF9800)),
-            label: 'My Pets',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person, color: Color(0xFFFF9800)),
-            label: 'Profile',
-          ),
-        ],
+        ),
+      ),
+    );
+  }
+
+  // Custom Navigation Item with Animated Active Dot
+  Widget _buildNavItem(IconData unselectedIcon, IconData selectedIcon, String label, int index) {
+    final isSelected = currentIndex == index;
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => setState(() => currentIndex = index),
+      child: SizedBox(
+        width: 65,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
+              child: Icon(
+                isSelected ? selectedIcon : unselectedIcon,
+                key: ValueKey(isSelected),
+                color: isSelected ? Colors.black87 : Colors.grey.shade400,
+                size: 26,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                color: isSelected ? Colors.black87 : Colors.grey.shade500,
+                letterSpacing: -0.2,
+              ),
+            ),
+            const SizedBox(height: 4),
+            // The Premium Detail: Animated Active Indicator Dot
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: 4,
+              width: isSelected ? 4 : 0,
+              decoration: const BoxDecoration(
+                color: Colors.black87,
+                shape: BoxShape.circle,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

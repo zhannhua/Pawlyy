@@ -7,151 +7,64 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        title: const Text(
-          "Profile",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () {},
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 1. User Info Header
-            Row(
-              children: [
-                const CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.blue,
-                  child: Text(
-                    "A",
-                    style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Alex Johnson",
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "+60 12-345 6789",
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                      const SizedBox(height: 4),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          "New User (28 days left)",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 32),
-
-            // 2. Growth Engine: Rewards & Referrals
-            const Text(
-              "Rewards & Promos",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: _RewardCard(
-                    title: "My Vouchers",
-                    subtitle: "2 Available",
-                    icon: Icons.confirmation_num_outlined,
-                    color: Colors.orange,
-                    onTap: () {},
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _RewardCard(
-                    title: "Invite Friends",
-                    subtitle: "Earn RM 5",
-                    icon: Icons.card_giftcard,
-                    color: Colors.teal,
-                    onTap: () {
-                      _showReferralBottomSheet(context);
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 32),
-
-            // 3. Pet Registration Hub
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "My Pets",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text("Add Pet"),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  _PetAvatar(name: "Milo", type: "Dog"),
-                  _PetAvatar(name: "Luna", type: "Cat"),
-                  _AddPetButton(),
-                ],
-              ),
-            ),
-            const SizedBox(height: 32),
-
-            // 4. General Settings Menu
-            const Text(
-              "General",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            Card(
+      backgroundColor: Colors.white, // Ultra-clean pure white background
+      body: SafeArea(
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(), // Modern native bounce effect
+          slivers: [
+            // 1. Apple-Style Dynamic Header
+            SliverAppBar(
+              backgroundColor: Colors.white,
               elevation: 0,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(16),
+              pinned: true,
+              expandedHeight: 100.0,
+              flexibleSpace: const FlexibleSpaceBar(
+                titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                title: Text(
+                  "Profile",
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -1.0,
+                    fontSize: 28,
+                  ),
+                ),
               ),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: IconButton(
+                    icon: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100, // Flat grey background, no shadow
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.settings_outlined, color: Colors.black87, size: 20),
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ],
+            ),
+
+            // 2. Main Profile Content
+            SliverToBoxAdapter(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _MenuTile(icon: Icons.history, title: "Booking History"),
-                  const Divider(height: 1),
-                  _MenuTile(icon: Icons.favorite_border, title: "Saved Shops"),
-                  const Divider(height: 1),
-                  _MenuTile(icon: Icons.help_outline, title: "Help & Support"),
+                  const SizedBox(height: 16),
+                  _buildUserInfo(context),
+                  const SizedBox(height: 32),
+
+                  _buildRewardsSection(context),
+                  const SizedBox(height: 32),
+
+                  _buildPetsSection(context),
+                  const SizedBox(height: 32),
+
+                  _buildSettingsSection(context),
+                  const SizedBox(height: 60), // Bottom padding
                 ],
               ),
             ),
@@ -161,68 +74,262 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // Bottom Sheet for Referral System
-  void _showReferralBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+  // 2. User Info Card (Clean & Flat)
+  Widget _buildUserInfo(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Row(
+        children: [
+          const CircleAvatar(
+            radius: 42,
+            backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=11'),
+            backgroundColor: Colors.grey,
+          ),
+          const SizedBox(width: 20),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Alex Johnson",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, letterSpacing: -0.5),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "+60 12-345 6789",
+                  style: TextStyle(color: Colors.grey[600], fontSize: 15, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20), // Pill shape
+                  ),
+                  child: Text(
+                    "New User (28 days left)",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
-      builder: (context) {
-        return Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+    );
+  }
+
+  // 3. Rewards & Referrals
+  Widget _buildRewardsSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Rewards & Promos",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: -0.5),
+          ),
+          const SizedBox(height: 16),
+          Row(
             children: [
-              const Icon(Icons.group_add, size: 48, color: Colors.teal),
-              const SizedBox(height: 16),
-              const Text(
-                "Invite Friends, Earn RM5!",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                "Share your code. When a friend signs up and completes their first paid booking, you both get an RM5 voucher.",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey),
-              ),
-              const SizedBox(height: 24),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(12),
-                  // FIXED: Removed BorderStyle.dash
-                  border: Border.all(color: Colors.grey.shade400),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "ALEX-PAW-24",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.5),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Clipboard.setData(const ClipboardData(text: "ALEX-PAW-24"));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Referral code copied!")),
-                        );
-                      },
-                      child: const Icon(Icons.copy, color: Colors.teal),
-                    ),
-                  ],
+              Expanded(
+                child: _AppleStyleRewardCard(
+                  title: "My Vouchers",
+                  subtitle: "2 Available",
+                  icon: Icons.confirmation_num_outlined,
+                  color: Colors.orange,
+                  onTap: () {},
                 ),
               ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text("Share Code"),
+              const SizedBox(width: 16),
+              Expanded(
+                child: _AppleStyleRewardCard(
+                  title: "Invite Friends",
+                  subtitle: "Earn RM 5",
+                  icon: Icons.card_giftcard,
+                  color: Colors.teal,
+                  onTap: () => _showReferralBottomSheet(context),
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 4. Pet Hub
+  Widget _buildPetsSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "My Pets",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: -0.5),
+              ),
+              TextButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.primary),
+                child: const Text("Manage", style: TextStyle(fontWeight: FontWeight.w600)),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Row(
+            children: [
+              _AppleStylePetAvatar(name: "Milo", type: "Dog"),
+              _AppleStylePetAvatar(name: "Luna", type: "Cat"),
+              _AppleStyleAddPetButton(),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  // 5. Apple-Style Settings Menu
+  Widget _buildSettingsSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "General",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: -0.5),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.grey.shade200), // Flat subtle outline, no shadow
+            ),
+            child: Column(
+              children: [
+                _AppleStyleMenuTile(icon: Icons.history, title: "Booking History", isFirst: true),
+                Divider(height: 1, color: Colors.grey.shade200, indent: 56), // Indented divider
+                _AppleStyleMenuTile(icon: Icons.favorite_border, title: "Saved Shops"),
+                Divider(height: 1, color: Colors.grey.shade200, indent: 56), // Indented divider
+                _AppleStyleMenuTile(icon: Icons.help_outline, title: "Help & Support", isLast: true),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Flat & Clean Bottom Sheet
+  void _showReferralBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+          ),
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 32),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Drag handle
+                Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(color: Colors.teal.shade50, shape: BoxShape.circle),
+                  child: const Icon(Icons.group_add, size: 40, color: Colors.teal),
+                ),
+                const SizedBox(height: 24),
+                const Text(
+                  "Invite Friends, Earn RM5!",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, letterSpacing: -0.5),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  "Share your code. When a friend signs up and completes their first paid booking, you both get an RM5 voucher.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey[600], fontSize: 15, height: 1.4),
+                ),
+                const SizedBox(height: 32),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100, // Flat grey, no border
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "ALEX-PAW-24",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.5, color: Colors.teal),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Clipboard.setData(const ClipboardData(text: "ALEX-PAW-24"));
+                          Navigator.pop(context); // Close sheet on copy
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text("Referral code copied!", style: TextStyle(fontWeight: FontWeight.bold)),
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.teal.shade600,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(color: Colors.teal.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
+                          child: const Icon(Icons.copy, color: Colors.teal, size: 20),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: Colors.black87, // Sleek black button
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    ),
+                    child: const Text("Share Code", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -230,16 +337,16 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-// --- Helper Widgets ---
+// --- Apple-Style Helper Widgets ---
 
-class _RewardCard extends StatelessWidget {
+class _AppleStyleRewardCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
-  final Color color;
+  final MaterialColor color;
   final VoidCallback onTap;
 
-  const _RewardCard({
+  const _AppleStyleRewardCard({
     required this.title,
     required this.subtitle,
     required this.icon,
@@ -251,22 +358,26 @@ class _RewardCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(20),
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: color.withOpacity(0.3)),
+          color: color.withOpacity(0.06), // Flat pastel background, NO SHADOW
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: color.withOpacity(0.1)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, color: color, size: 28),
-            const SizedBox(height: 12),
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+              child: Icon(icon, color: color.shade600, size: 24),
+            ),
+            const SizedBox(height: 16),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15, letterSpacing: -0.3)),
             const SizedBox(height: 4),
-            Text(subtitle, style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600)),
+            Text(subtitle, style: TextStyle(color: color.shade700, fontSize: 13, fontWeight: FontWeight.w600)),
           ],
         ),
       ),
@@ -274,69 +385,99 @@ class _RewardCard extends StatelessWidget {
   }
 }
 
-class _PetAvatar extends StatelessWidget {
+class _AppleStylePetAvatar extends StatelessWidget {
   final String name;
   final String type;
 
-  const _PetAvatar({required this.name, required this.type});
+  const _AppleStylePetAvatar({required this.name, required this.type});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 16.0),
+      padding: const EdgeInsets.only(right: 20.0),
       child: Column(
         children: [
           CircleAvatar(
-            radius: 35,
-            backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+            radius: 36,
+            backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.08),
             child: Icon(
               type == "Dog" ? Icons.pets : Icons.cruelty_free,
-              size: 30,
+              size: 32,
               color: Theme.of(context).colorScheme.primary,
             ),
           ),
-          const SizedBox(height: 8),
-          Text(name, style: const TextStyle(fontWeight: FontWeight.w600)),
+          const SizedBox(height: 10),
+          Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         ],
       ),
     );
   }
 }
 
-class _AddPetButton extends StatelessWidget {
+class _AppleStyleAddPetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         InkWell(
           onTap: () {},
-          borderRadius: BorderRadius.circular(35),
-          child: CircleAvatar(
-            radius: 35,
-            backgroundColor: Colors.grey[200],
-            child: const Icon(Icons.add, size: 30, color: Colors.grey),
+          borderRadius: BorderRadius.circular(36),
+          child: Container(
+            width: 72,
+            height: 72,
+            decoration: BoxDecoration(
+              color: Colors.grey.shade50,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.grey.shade300, width: 1.5, style: BorderStyle.solid),
+            ),
+            child: const Icon(Icons.add, size: 28, color: Colors.grey),
           ),
         ),
-        const SizedBox(height: 8),
-        const Text("Add", style: TextStyle(fontWeight: FontWeight.w600, color: Colors.grey)),
+        const SizedBox(height: 10),
+        const Text("Add Pet", style: TextStyle(fontWeight: FontWeight.w600, color: Colors.grey, fontSize: 14)),
       ],
     );
   }
 }
 
-class _MenuTile extends StatelessWidget {
+class _AppleStyleMenuTile extends StatelessWidget {
   final IconData icon;
   final String title;
+  final bool isFirst;
+  final bool isLast;
 
-  const _MenuTile({required this.icon, required this.title});
+  const _AppleStyleMenuTile({
+    required this.icon,
+    required this.title,
+    this.isFirst = false,
+    this.isLast = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.grey[700]),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-      trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+    return InkWell(
       onTap: () {},
+      borderRadius: BorderRadius.vertical(
+        top: isFirst ? const Radius.circular(20) : Radius.zero,
+        bottom: isLast ? const Radius.circular(20) : Radius.zero,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(10)), // Flat icon background
+              child: Icon(icon, color: Colors.grey[700], size: 20),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+            ),
+            const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
+          ],
+        ),
+      ),
     );
   }
 }
