@@ -22,6 +22,7 @@ ThemeData pawlyTheme() {
 
   return ThemeData(
     useMaterial3: true,
+    fontFamily: 'Roboto',
     colorScheme: scheme,
     scaffoldBackgroundColor: PawlyColors.mist,
     appBarTheme: const AppBarTheme(
@@ -58,23 +59,23 @@ ThemeData pawlyTheme() {
         elevation: 0,
         minimumSize: const Size.fromHeight(54),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
       ),
     ),
     textTheme: const TextTheme(
       headlineMedium: TextStyle(
         color: PawlyColors.ink,
-        fontWeight: FontWeight.w900,
-        letterSpacing: -1.1,
+        fontWeight: FontWeight.w700,
+        letterSpacing: -.4,
       ),
       titleLarge: TextStyle(
         color: PawlyColors.ink,
-        fontWeight: FontWeight.w800,
-        letterSpacing: -.5,
+        fontWeight: FontWeight.w700,
+        letterSpacing: -.2,
       ),
       titleMedium: TextStyle(
         color: PawlyColors.ink,
-        fontWeight: FontWeight.w800,
+        fontWeight: FontWeight.w700,
       ),
       bodyMedium: TextStyle(color: Color(0xFF667085)),
     ),

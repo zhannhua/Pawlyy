@@ -144,7 +144,7 @@ class PawlyRepository {
         .eq('is_active', true)
         .gte('starts_at', DateTime.now().toUtc().toIso8601String())
         .order('starts_at')
-        .limit(12);
+        .limit(90);
     return (result as List)
         .map(
           (row) => ServiceSlot.fromMap(Map<String, dynamic>.from(row as Map)),

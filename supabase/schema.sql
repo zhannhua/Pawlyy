@@ -349,7 +349,7 @@ select services.id,
        ((current_date + offsets.days_from_today + slots.time_of_day) at time zone 'Asia/Kuala_Lumpur'),
        1
 from public.provider_services as services
-cross join generate_series(1, 14) as offsets(days_from_today)
+cross join generate_series(1, 42) as offsets(days_from_today)
 cross join (values (time '10:00'), (time '12:00'), (time '15:00'), (time '17:00')) as slots(time_of_day)
 where services.is_active = true
   and extract(isodow from current_date + offsets.days_from_today) < 7

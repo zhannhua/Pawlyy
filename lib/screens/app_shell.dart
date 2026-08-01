@@ -70,12 +70,13 @@ class _AppShellState extends State<AppShell> {
             children: [
               SafeArea(
                 child: NavigationRail(
+                  minWidth: 112,
                   selectedIndex: _index,
                   onDestinationSelected: _setIndex,
                   labelType: NavigationRailLabelType.all,
                   leading: const Padding(
                     padding: EdgeInsets.only(bottom: 28, top: 8),
-                    child: _PawlyMark(),
+                    child: _PawlyMark(compact: true),
                   ),
                   destinations: destinations
                       .map(
@@ -115,24 +116,16 @@ class _Destination {
 }
 
 class _PawlyMark extends StatelessWidget {
-  const _PawlyMark();
+  const _PawlyMark({this.compact = false});
+
+  final bool compact;
 
   @override
-  Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Container(
-        height: 42,
-        width: 42,
-        decoration: const BoxDecoration(
-          color: PawlyColors.teal,
-          shape: BoxShape.circle,
-        ),
-        child: const Icon(Icons.pets_rounded, color: Colors.white),
-      ),
-      const SizedBox(height: 7),
-      const Text('Pawly', style: TextStyle(fontWeight: FontWeight.w900)),
-    ],
+  Widget build(BuildContext context) => Image.asset(
+    'assets/branding/pawly-logo.png',
+    width: compact ? 84 : 116,
+    height: compact ? 62 : 68,
+    fit: BoxFit.contain,
   );
 }
 
@@ -216,13 +209,13 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 30),
               Text(
-                'Hi, $name 👋',
+                'Welcome back, $name',
                 style: Theme.of(
                   context,
                 ).textTheme.headlineMedium?.copyWith(fontSize: 32),
               ),
               const SizedBox(height: 8),
-              const Text('Everything your pet needs, in one happy place.'),
+              const Text('Your pet care, bookings, and routines in one place.'),
               const SizedBox(height: 24),
               _CareHero(
                 petCount: data.pets.length,
@@ -338,53 +331,79 @@ class _CareHero extends StatelessWidget {
   final VoidCallback onOpenCare;
 
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(24),
-    decoration: BoxDecoration(
-      gradient: const LinearGradient(
-        colors: [PawlyColors.teal, PawlyColors.darkTeal],
-      ),
-      borderRadius: BorderRadius.circular(26),
-    ),
-    child: Row(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                petCount == 0
-                    ? 'A lovely start'
-                    : '$completedCount of $taskCount care tasks done',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 21,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                petCount == 0
-                    ? 'Your pet’s personalised dashboard is ready when you are.'
-                    : 'Keep the little things on track today.',
-                style: const TextStyle(color: Color(0xE6FFFFFF), height: 1.35),
-              ),
-              const SizedBox(height: 18),
-              TextButton.icon(
-                onPressed: onOpenCare,
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.white.withOpacity(.16),
-                ),
-                icon: const Icon(Icons.arrow_forward_rounded),
-                label: const Text('Open routine'),
-              ),
-            ],
+  Widget build(BuildContext context) => ClipRRect(
+    borderRadius: BorderRadius.circular(28),
+    child: SizedBox(
+      height: 250,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/images/pawly-home-hero.png',
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
           ),
-        ),
-        const SizedBox(width: 16),
-        const Icon(Icons.favorite_rounded, color: Color(0xFFFFD9A6), size: 54),
-      ],
+          const DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Color(0x000E555B), Color(0xB80E555B)],
+                stops: [.38, 1],
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 280),
+              child: Padding(
+                padding: const EdgeInsets.all(22),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Care made for real life.',
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            height: 1.05,
+                          ),
+                    ),
+                    const SizedBox(height: 9),
+                    Text(
+                      petCount == 0
+                          ? 'Set up your pet profile and keep their everyday care in one simple place.'
+                          : '$completedCount of $taskCount care tasks completed today.',
+                      style: const TextStyle(
+                        color: Color(0xEEFFFFFF),
+                        fontSize: 13,
+                        height: 1.35,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextButton.icon(
+                      onPressed: onOpenCare,
+                      style: TextButton.styleFrom(
+                        foregroundColor: PawlyColors.darkTeal,
+                        backgroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 10,
+                        ),
+                      ),
+                      icon: const Icon(Icons.arrow_forward_rounded, size: 18),
+                      label: const Text('Open routine'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -931,59 +950,59 @@ class PetEditorPage extends StatefulWidget {
 class _PetEditorPageState extends State<PetEditorPage> {
   static const _customBreed = 'Other / custom breed';
   static const _dogBreeds = [
-    'Mixed breed',
-    'Golden Retriever',
-    'Labrador Retriever',
-    'German Shepherd',
-    'Poodle',
-    'Shih Tzu',
-    'Pomeranian',
-    'Chihuahua',
-    'Beagle',
-    'French Bulldog',
-    'Siberian Husky',
-    'Rottweiler',
-    'Border Collie',
-    'Dachshund',
-    'Corgi',
-    'Maltese',
-    'Yorkshire Terrier',
-    'Pug',
-    'Doberman',
-    'Samoyed',
-    'English Bulldog',
-    'Jack Russell Terrier',
-    'Miniature Pinscher',
-    'Bichon Frise',
     'American Bully',
+    'Beagle',
+    'Bichon Frise',
+    'Border Collie',
+    'Chihuahua',
+    'Corgi',
+    'Dachshund',
+    'Doberman',
+    'English Bulldog',
+    'French Bulldog',
+    'German Shepherd',
+    'Golden Retriever',
+    'Jack Russell Terrier',
+    'Labrador Retriever',
+    'Maltese',
+    'Miniature Pinscher',
+    'Mixed breed',
+    'Pomeranian',
+    'Poodle',
+    'Pug',
+    'Rottweiler',
+    'Samoyed',
+    'Shih Tzu',
+    'Siberian Husky',
+    'Yorkshire Terrier',
     _customBreed,
   ];
   static const _catBreeds = [
-    'Domestic Shorthair',
-    'Domestic Longhair',
-    'Mixed breed',
-    'Ragdoll',
-    'Persian',
-    'British Shorthair',
-    'Maine Coon',
-    'Siamese',
-    'Scottish Fold',
-    'Bengal',
-    'Sphynx',
-    'American Shorthair',
-    'Russian Blue',
-    'Norwegian Forest Cat',
     'Abyssinian',
+    'American Shorthair',
+    'Bengal',
     'Birman',
     'Bombay',
+    'British Shorthair',
     'Devon Rex',
+    'Domestic Longhair',
+    'Domestic Shorthair',
     'Exotic Shorthair',
     'Himalayan',
-    'Munchkin',
-    'Oriental Shorthair',
-    'Turkish Angora',
-    'Singapura',
+    'Maine Coon',
     'Manx',
+    'Mixed breed',
+    'Munchkin',
+    'Norwegian Forest Cat',
+    'Oriental Shorthair',
+    'Persian',
+    'Ragdoll',
+    'Russian Blue',
+    'Scottish Fold',
+    'Siamese',
+    'Singapura',
+    'Sphynx',
+    'Turkish Angora',
     _customBreed,
   ];
 
@@ -1905,6 +1924,26 @@ class _BookingSheetState extends State<_BookingSheet> {
     await _bookingDataFuture;
   }
 
+  Future<void> _chooseDateFromCalendar(List<DateTime> availableDates) async {
+    if (availableDates.isEmpty) return;
+    final initialDate = _selectedDate ?? availableDates.first;
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: availableDates.first,
+      lastDate: availableDates.last,
+      selectableDayPredicate: (date) =>
+          availableDates.any((available) => _sameCalendarDay(date, available)),
+      helpText: 'Choose an available date',
+    );
+    if (picked != null && mounted) {
+      setState(() {
+        _selectedDate = picked;
+        _slotId = null;
+      });
+    }
+  }
+
   Future<void> _save() async {
     if (_petId == null) {
       _showSnack(context, 'Choose a pet to continue.', isError: true);
@@ -2035,9 +2074,28 @@ class _BookingSheetState extends State<_BookingSheet> {
                             'No future slots are available yet. Please check again soon.',
                       )
                     else ...[
-                      const _BookingStepLabel(
-                        number: '2',
-                        title: 'Select a date',
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: _BookingStepLabel(
+                              number: '2',
+                              title: 'Select a date',
+                            ),
+                          ),
+                          TextButton.icon(
+                            onPressed: () =>
+                                _chooseDateFromCalendar(availableDates),
+                            icon: const Icon(
+                              Icons.calendar_month_outlined,
+                              size: 17,
+                            ),
+                            label: const Text('Calendar'),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        '${availableDates.length} available dates — swipe or open the calendar.',
+                        style: const TextStyle(fontSize: 12),
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
