@@ -13,7 +13,6 @@ class PetScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white, // Ultra-clean pure white background
-
       // 1. Sleek Apple-Style Bottom Action Bar (Replaces the Floating Action Button)
       bottomNavigationBar: SafeArea(
         child: Padding(
@@ -22,9 +21,7 @@ class PetScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => const AddPetScreen(),
-                ),
+                MaterialPageRoute(builder: (context) => const AddPetScreen()),
               );
             },
             style: ElevatedButton.styleFrom(
@@ -41,7 +38,10 @@ class PetScreen extends StatelessWidget {
               children: [
                 Icon(Icons.add, size: 20),
                 SizedBox(width: 8),
-                Text("Add New Pet", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(
+                  "Add New Pet",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
               ],
             ),
           ),
@@ -76,10 +76,16 @@ class PetScreen extends StatelessWidget {
                   icon: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade100, // Flat grey background, no shadow
+                      color: Colors
+                          .grey
+                          .shade100, // Flat grey background, no shadow
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.history, color: Colors.black87, size: 20),
+                    child: const Icon(
+                      Icons.history,
+                      color: Colors.black87,
+                      size: 20,
+                    ),
                   ),
                   tooltip: "Medical History",
                   onPressed: () {},
@@ -98,21 +104,18 @@ class PetScreen extends StatelessWidget {
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                    final pet = pets[index];
-                    return _AppleStylePetCard(
-                      name: pet.name,
-                      species: pet.species,
-                      breed: pet.breed,
-                      weight: pet.weight,
-                      gender: pet.gender,
-                      age: "Born: ${pet.birthday.year}",
-                      color: pet.species == 'Dog' ? Colors.orange : Colors.teal,
-                    );
-                  },
-                  childCount: pets.length,
-                ),
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  final pet = pets[index];
+                  return _AppleStylePetCard(
+                    name: pet.name,
+                    species: pet.species,
+                    breed: pet.breed,
+                    weight: pet.weight,
+                    gender: pet.gender,
+                    age: "Born: ${pet.birthday.year}",
+                    color: pet.species == 'Dog' ? Colors.orange : Colors.teal,
+                  );
+                }, childCount: pets.length),
               ),
             ),
         ],
@@ -132,16 +135,16 @@ class PetScreen extends StatelessWidget {
               color: Colors.grey.shade50,
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              Icons.pets,
-              size: 64,
-              color: Colors.grey.shade300,
-            ),
+            child: Icon(Icons.pets, size: 64, color: Colors.grey.shade300),
           ),
           const SizedBox(height: 24),
           const Text(
             "No pets added yet!",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, letterSpacing: -0.5),
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w800,
+              letterSpacing: -0.5,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
@@ -182,7 +185,9 @@ class _AppleStylePetCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color.withOpacity(0.06), // Flat pastel background, NO SHADOW
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: color.withOpacity(0.1)), // Subtle matching border
+        border: Border.all(
+          color: color.withOpacity(0.1),
+        ), // Subtle matching border
       ),
       child: Material(
         color: Colors.transparent,
@@ -202,7 +207,8 @@ class _AppleStylePetCard extends StatelessWidget {
                       width: 64,
                       height: 64,
                       decoration: const BoxDecoration(
-                        color: Colors.white, // Crisp white pop against pastel card
+                        color:
+                            Colors.white, // Crisp white pop against pastel card
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -230,7 +236,9 @@ class _AppleStylePetCard extends StatelessWidget {
                               ),
                               Icon(
                                 gender == "Male" ? Icons.male : Icons.female,
-                                color: gender == "Male" ? Colors.blue : Colors.pink,
+                                color: gender == "Male"
+                                    ? Colors.blue
+                                    : Colors.pink,
                                 size: 20,
                               ),
                             ],
@@ -240,7 +248,8 @@ class _AppleStylePetCard extends StatelessWidget {
                             breed,
                             style: TextStyle(
                               fontSize: 14,
-                              color: color.shade700, // Matches text to the card's theme
+                              color: color
+                                  .shade700, // Matches text to the card's theme
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -257,11 +266,20 @@ class _AppleStylePetCard extends StatelessWidget {
                 // Footer: Flat White Stat Pills
                 Row(
                   children: [
-                    Expanded(child: _FlatStatPill(label: "Age", value: age)),
+                    Expanded(
+                      child: _FlatStatPill(label: "Age", value: age),
+                    ),
                     const SizedBox(width: 12),
-                    Expanded(child: _FlatStatPill(label: "Weight", value: "${weight.toStringAsFixed(1)} kg")),
+                    Expanded(
+                      child: _FlatStatPill(
+                        label: "Weight",
+                        value: "${weight.toStringAsFixed(1)} kg",
+                      ),
+                    ),
                     const SizedBox(width: 12),
-                    Expanded(child: _FlatStatPill(label: "Species", value: species)),
+                    Expanded(
+                      child: _FlatStatPill(label: "Species", value: species),
+                    ),
                   ],
                 ),
               ],

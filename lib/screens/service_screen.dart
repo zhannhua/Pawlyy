@@ -24,7 +24,10 @@ class ServiceScreen extends StatelessWidget {
               pinned: true,
               expandedHeight: 80.0,
               flexibleSpace: const FlexibleSpaceBar(
-                titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                titlePadding: EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
                 title: Text(
                   "Services",
                   style: TextStyle(
@@ -39,7 +42,11 @@ class ServiceScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 16.0),
                   child: IconButton(
-                    icon: const Icon(Icons.map_outlined, color: Colors.black87, size: 28),
+                    icon: const Icon(
+                      Icons.map_outlined,
+                      color: Colors.black87,
+                      size: 28,
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -54,9 +61,7 @@ class ServiceScreen extends StatelessWidget {
             ),
 
             // 2. Search & Filter Bar
-            SliverToBoxAdapter(
-              child: _buildSearchBar(context),
-            ),
+            SliverToBoxAdapter(child: _buildSearchBar(context)),
 
             // 3. Rich Media Service Cards
             SliverPadding(
@@ -72,7 +77,8 @@ class ServiceScreen extends StatelessWidget {
                     isVerified: true,
                     distance: "2.5 km",
                     bottomLeftText: "Nourishing Premium Trim",
-                    imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=300&auto=format&fit=crop', // Maltese
+                    imageUrl:
+                        'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=300&auto=format&fit=crop', // Maltese
                     badgeIcon: Icons.pets,
                     badgeText: "Premium",
                     isPremium: true,
@@ -86,7 +92,8 @@ class ServiceScreen extends StatelessWidget {
                     isVerified: true,
                     distance: "3.1 km",
                     bottomLeftText: "Gentle Dry\n& Brush",
-                    imageUrl: 'https://images.unsplash.com/photo-1597626133663-cb34ae9231f4?q=80&w=300&auto=format&fit=crop', // Corgi
+                    imageUrl:
+                        'https://images.unsplash.com/photo-1597626133663-cb34ae9231f4?q=80&w=300&auto=format&fit=crop', // Corgi
                     badgeIcon: Icons.cleaning_services,
                     badgeText: "Basic",
                     isPremium: false,
@@ -100,12 +107,15 @@ class ServiceScreen extends StatelessWidget {
                     isVerified: false,
                     distance: "5.0 km",
                     bottomLeftText: "Artisan Treats\n& Full Care",
-                    imageUrl: 'https://images.unsplash.com/photo-1582798358481-d199fb7347bb?q=80&w=300&auto=format&fit=crop', // Treats
+                    imageUrl:
+                        'https://images.unsplash.com/photo-1582798358481-d199fb7347bb?q=80&w=300&auto=format&fit=crop', // Treats
                     badgeIcon: Icons.cookie,
                     badgeText: "Full",
                     isPremium: false,
                   ),
-                  const SizedBox(height: 80), // Bottom padding for scrolling over navbar
+                  const SizedBox(
+                    height: 80,
+                  ), // Bottom padding for scrolling over navbar
                 ]),
               ),
             ),
@@ -127,13 +137,21 @@ class ServiceScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.02),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
                 ],
               ),
               child: TextField(
                 decoration: InputDecoration(
                   hintText: "Search Klang Valley...",
-                  hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 16, fontWeight: FontWeight.w500),
+                  hintStyle: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
                   prefixIcon: Icon(Icons.search, color: Colors.grey.shade500),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -150,7 +168,11 @@ class ServiceScreen extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 10, offset: const Offset(0, 4))
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.02),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
               ],
             ),
             child: IconButton(
@@ -218,7 +240,7 @@ class _RichServiceCardState extends State<_RichServiceCard> {
             color: Colors.black.withOpacity(0.04),
             blurRadius: 15,
             offset: const Offset(0, 6),
-          )
+          ),
         ],
       ),
       child: InkWell(
@@ -261,26 +283,51 @@ class _RichServiceCardState extends State<_RichServiceCard> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
-                                border: Border.all(color: Colors.grey.shade200, width: 1.5),
-                                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 4, offset: const Offset(0, 2))],
+                                border: Border.all(
+                                  color: Colors.grey.shade200,
+                                  width: 1.5,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.05),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
                               ),
-                              child: Icon(widget.badgeIcon, size: 18, color: widget.isPremium ? Colors.brown.shade700 : Colors.grey.shade600),
+                              child: Icon(
+                                widget.badgeIcon,
+                                size: 18,
+                                color: widget.isPremium
+                                    ? Colors.brown.shade700
+                                    : Colors.grey.shade600,
+                              ),
                             ),
                             Transform.translate(
                               offset: const Offset(0, -8),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 2,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: widget.isPremium ? ServiceScreen.brandOrange : Colors.grey.shade300,
+                                  color: widget.isPremium
+                                      ? ServiceScreen.brandOrange
+                                      : Colors.grey.shade300,
                                   borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(color: Colors.white, width: 1.5),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1.5,
+                                  ),
                                 ),
                                 child: Text(
                                   widget.badgeText,
                                   style: TextStyle(
-                                      fontSize: 9,
-                                      fontWeight: FontWeight.w900,
-                                      color: widget.isPremium ? Colors.white : Colors.black87
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w900,
+                                    color: widget.isPremium
+                                        ? Colors.white
+                                        : Colors.black87,
                                   ),
                                 ),
                               ),
@@ -294,7 +341,13 @@ class _RichServiceCardState extends State<_RichServiceCard> {
                   Text(
                     widget.bottomLeftText,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13, height: 1.2, letterSpacing: -0.3, color: Colors.black87),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 13,
+                      height: 1.2,
+                      letterSpacing: -0.3,
+                      color: Colors.black87,
+                    ),
                   ),
                 ],
               ),
@@ -319,16 +372,32 @@ class _RichServiceCardState extends State<_RichServiceCard> {
                                 Flexible(
                                   child: Text(
                                     widget.name,
-                                    style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18, letterSpacing: -0.5, height: 1.1),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 18,
+                                      letterSpacing: -0.5,
+                                      height: 1.1,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 4),
                                 if (widget.isVerified)
-                                  const Icon(Icons.verified, color: Colors.blue, size: 16),
+                                  const Icon(
+                                    Icons.verified,
+                                    color: Colors.blue,
+                                    size: 16,
+                                  ),
                               ],
                             ),
                             const SizedBox(height: 4),
-                            Text(widget.type, style: TextStyle(color: Colors.grey.shade600, fontSize: 14, fontWeight: FontWeight.w500)),
+                            Text(
+                              widget.type,
+                              style: TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -355,15 +424,26 @@ class _RichServiceCardState extends State<_RichServiceCard> {
                   // Ratings Row
                   Row(
                     children: [
-                      const Icon(Icons.star_rounded, color: Colors.amber, size: 18),
+                      const Icon(
+                        Icons.star_rounded,
+                        color: Colors.amber,
+                        size: 18,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         widget.rating,
-                        style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 13,
+                        ),
                       ),
                       Text(
                         " (${widget.reviewCount} Reviews)",
-                        style: TextStyle(color: Colors.grey.shade600, fontSize: 12, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       const SizedBox(width: 8),
                       // Mini Review Avatars Stack
@@ -372,9 +452,18 @@ class _RichServiceCardState extends State<_RichServiceCard> {
                         height: 20,
                         child: Stack(
                           children: [
-                            _buildMiniAvatar('https://i.pravatar.cc/150?img=32', 0),
-                            _buildMiniAvatar('https://i.pravatar.cc/150?img=44', 12),
-                            _buildMiniAvatar('https://i.pravatar.cc/150?img=68', 24),
+                            _buildMiniAvatar(
+                              'https://i.pravatar.cc/150?img=32',
+                              0,
+                            ),
+                            _buildMiniAvatar(
+                              'https://i.pravatar.cc/150?img=44',
+                              12,
+                            ),
+                            _buildMiniAvatar(
+                              'https://i.pravatar.cc/150?img=68',
+                              24,
+                            ),
                           ],
                         ),
                       ),
@@ -385,11 +474,19 @@ class _RichServiceCardState extends State<_RichServiceCard> {
                   // Location Row
                   Row(
                     children: [
-                      Icon(Icons.location_on_outlined, color: Colors.grey.shade500, size: 16),
+                      Icon(
+                        Icons.location_on_outlined,
+                        color: Colors.grey.shade500,
+                        size: 16,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         widget.distance,
-                        style: TextStyle(color: Colors.grey.shade600, fontSize: 13, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
@@ -401,31 +498,57 @@ class _RichServiceCardState extends State<_RichServiceCard> {
                     children: [
                       // Price Glow Pill
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: widget.isPremium ? Colors.orange.shade200 : Colors.grey.shade300, width: 1.5),
+                          border: Border.all(
+                            color: widget.isPremium
+                                ? Colors.orange.shade200
+                                : Colors.grey.shade300,
+                            width: 1.5,
+                          ),
                           boxShadow: widget.isPremium
-                              ? [BoxShadow(color: Colors.orange.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 3))]
+                              ? [
+                                  BoxShadow(
+                                    color: Colors.orange.withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ]
                               : [],
                         ),
                         child: Text(
                           widget.basePrice,
-                          style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16, letterSpacing: -0.5, color: Colors.black87),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 16,
+                            letterSpacing: -0.5,
+                            color: Colors.black87,
+                          ),
                         ),
                       ),
 
                       // Orange Book Pill
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 10,
+                        ),
                         decoration: BoxDecoration(
                           color: ServiceScreen.brandOrange,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: const Text(
                           "Book",
-                          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14, color: Colors.white),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
@@ -448,10 +571,7 @@ class _RichServiceCardState extends State<_RichServiceCard> {
           shape: BoxShape.circle,
           border: Border.all(color: Colors.white, width: 1.5),
         ),
-        child: CircleAvatar(
-          radius: 8,
-          backgroundImage: NetworkImage(url),
-        ),
+        child: CircleAvatar(radius: 8, backgroundImage: NetworkImage(url)),
       ),
     );
   }

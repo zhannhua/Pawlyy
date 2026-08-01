@@ -26,7 +26,9 @@ class _TrackerScreenState extends State<TrackerScreen> {
   Widget build(BuildContext context) {
     // Count completed tasks for the progress bar
     final completedCount = _dailyTasks.values.where((isDone) => isDone).length;
-    final progress = _dailyTasks.isNotEmpty ? completedCount / _dailyTasks.length : 0.0;
+    final progress = _dailyTasks.isNotEmpty
+        ? completedCount / _dailyTasks.length
+        : 0.0;
 
     return Scaffold(
       backgroundColor: Colors.white, // Ultra-clean pure white background
@@ -41,7 +43,10 @@ class _TrackerScreenState extends State<TrackerScreen> {
               pinned: true,
               expandedHeight: 100.0,
               flexibleSpace: const FlexibleSpaceBar(
-                titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                titlePadding: EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
                 title: Text(
                   "Daily Care",
                   style: TextStyle(
@@ -59,10 +64,16 @@ class _TrackerScreenState extends State<TrackerScreen> {
                     icon: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade100, // Flat grey background, no shadow
+                        color: Colors
+                            .grey
+                            .shade100, // Flat grey background, no shadow
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.calendar_month_outlined, color: Colors.black87, size: 20),
+                      child: const Icon(
+                        Icons.calendar_month_outlined,
+                        color: Colors.black87,
+                        size: 20,
+                      ),
                     ),
                     onPressed: () {
                       // Future: Open calendar to view past logs
@@ -86,7 +97,10 @@ class _TrackerScreenState extends State<TrackerScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 8,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade100, // Flat grey, no shadow
                             borderRadius: BorderRadius.circular(20),
@@ -95,13 +109,29 @@ class _TrackerScreenState extends State<TrackerScreen> {
                             children: [
                               CircleAvatar(
                                 radius: 12,
-                                backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-                                child: Icon(Icons.pets, size: 14, color: Theme.of(context).colorScheme.primary),
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.primary.withOpacity(0.2),
+                                child: Icon(
+                                  Icons.pets,
+                                  size: 14,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                               ),
                               const SizedBox(width: 8),
-                              const Text("Milo", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                              const Text(
+                                "Milo",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
                               const SizedBox(width: 4),
-                              const Icon(Icons.keyboard_arrow_down, size: 18, color: Colors.grey),
+                              const Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 18,
+                                color: Colors.grey,
+                              ),
                             ],
                           ),
                         ),
@@ -124,7 +154,9 @@ class _TrackerScreenState extends State<TrackerScreen> {
                         gradient: LinearGradient(
                           colors: [
                             Theme.of(context).colorScheme.primary,
-                            Theme.of(context).colorScheme.primary.withBlue(50).withRed(255), // Slight warm gradient
+                            Theme.of(context).colorScheme.primary
+                                .withBlue(50)
+                                .withRed(255), // Slight warm gradient
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -147,7 +179,10 @@ class _TrackerScreenState extends State<TrackerScreen> {
                           const SizedBox(height: 6),
                           Text(
                             "You've completed $completedCount of ${_dailyTasks.length} tasks today.",
-                            style: TextStyle(color: Colors.white.withOpacity(0.9), fontSize: 15),
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.9),
+                              fontSize: 15,
+                            ),
                           ),
                           const SizedBox(height: 20),
                           ClipRRect(
@@ -155,7 +190,9 @@ class _TrackerScreenState extends State<TrackerScreen> {
                             child: LinearProgressIndicator(
                               value: progress,
                               backgroundColor: Colors.black.withOpacity(0.15),
-                              valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
                               minHeight: 8,
                             ),
                           ),
@@ -178,12 +215,19 @@ class _TrackerScreenState extends State<TrackerScreen> {
                         ),
                         TextButton(
                           onPressed: () {},
-                          style: TextButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.primary),
+                          style: TextButton.styleFrom(
+                            foregroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
+                          ),
                           child: const Row(
                             children: [
                               Icon(Icons.add, size: 18),
                               SizedBox(width: 4),
-                              Text("Add", style: TextStyle(fontWeight: FontWeight.w600)),
+                              Text(
+                                "Add",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
                             ],
                           ),
                         ),
@@ -229,7 +273,9 @@ class _TrackerScreenState extends State<TrackerScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.blue.withOpacity(0.06), // Flat pastel background, no shadow
+        color: Colors.blue.withOpacity(
+          0.06,
+        ), // Flat pastel background, no shadow
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: Colors.blue.withOpacity(0.1)),
       ),
@@ -248,9 +294,23 @@ class _TrackerScreenState extends State<TrackerScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Annual Vaccination", style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16, letterSpacing: -0.3)),
+                const Text(
+                  "Annual Vaccination",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                    letterSpacing: -0.3,
+                  ),
+                ),
                 const SizedBox(height: 4),
-                Text("Due in 2 weeks", style: TextStyle(color: Colors.blue.shade700, fontSize: 13, fontWeight: FontWeight.w600)),
+                Text(
+                  "Due in 2 weeks",
+                  style: TextStyle(
+                    color: Colors.blue.shade700,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ],
             ),
           ),
@@ -265,7 +325,14 @@ class _TrackerScreenState extends State<TrackerScreen> {
                 color: Colors.blue.shade600, // Solid pill button
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const Text("Book", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14)),
+              child: const Text(
+                "Book",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
             ),
           ),
         ],
@@ -311,10 +378,14 @@ class _AppleStyleTaskCard extends StatelessWidget {
               width: 26,
               height: 26,
               decoration: BoxDecoration(
-                color: isCompleted ? Theme.of(context).colorScheme.primary : Colors.transparent,
+                color: isCompleted
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.transparent,
                 shape: BoxShape.circle, // Apple uses circular checkboxes often
                 border: Border.all(
-                  color: isCompleted ? Theme.of(context).colorScheme.primary : Colors.grey.shade300,
+                  color: isCompleted
+                      ? Theme.of(context).colorScheme.primary
+                      : Colors.grey.shade300,
                   width: 2,
                 ),
               ),

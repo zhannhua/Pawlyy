@@ -23,7 +23,10 @@ class ProfileScreen extends StatelessWidget {
               pinned: true,
               expandedHeight: 100.0,
               flexibleSpace: const FlexibleSpaceBar(
-                titlePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                titlePadding: EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 16,
+                ),
                 title: Text(
                   "Profile",
                   style: TextStyle(
@@ -44,7 +47,11 @@ class ProfileScreen extends StatelessWidget {
                         color: Colors.grey.shade100, // Flat grey background
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.settings_outlined, color: Colors.black87, size: 20),
+                      child: const Icon(
+                        Icons.settings_outlined,
+                        color: Colors.black87,
+                        size: 20,
+                      ),
                     ),
                     onPressed: () {},
                   ),
@@ -96,16 +103,27 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 const Text(
                   "Alex Johnson",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800, letterSpacing: -0.5),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.5,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "+60 12-345 6789",
-                  style: TextStyle(color: Colors.grey[600], fontSize: 15, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: brandTeal.withOpacity(0.1), // Brand Teal tint
                     borderRadius: BorderRadius.circular(20),
@@ -136,7 +154,11 @@ class ProfileScreen extends StatelessWidget {
         children: [
           const Text(
             "Rewards & Promos",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: -0.5),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           const SizedBox(height: 16),
           Row(
@@ -179,12 +201,19 @@ class ProfileScreen extends StatelessWidget {
             children: [
               const Text(
                 "My Pets",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: -0.5),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: -0.5,
+                ),
               ),
               TextButton(
                 onPressed: () {},
                 style: TextButton.styleFrom(foregroundColor: brandTeal),
-                child: const Text("Manage", style: TextStyle(fontWeight: FontWeight.w600)),
+                child: const Text(
+                  "Manage",
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
               ),
             ],
           ),
@@ -215,22 +244,39 @@ class ProfileScreen extends StatelessWidget {
         children: [
           const Text(
             "General",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: -0.5),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.5,
+            ),
           ),
           const SizedBox(height: 16),
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.grey.shade200), // Flat subtle outline
+              border: Border.all(
+                color: Colors.grey.shade200,
+              ), // Flat subtle outline
             ),
             child: Column(
               children: [
-                const _AppleStyleMenuTile(icon: Icons.history, title: "Booking History", isFirst: true),
+                const _AppleStyleMenuTile(
+                  icon: Icons.history,
+                  title: "Booking History",
+                  isFirst: true,
+                ),
                 Divider(height: 1, color: Colors.grey.shade200, indent: 56),
-                const _AppleStyleMenuTile(icon: Icons.favorite_border, title: "Saved Shops"),
+                const _AppleStyleMenuTile(
+                  icon: Icons.favorite_border,
+                  title: "Saved Shops",
+                ),
                 Divider(height: 1, color: Colors.grey.shade200, indent: 56),
-                const _AppleStyleMenuTile(icon: Icons.help_outline, title: "Help & Support", isLast: true),
+                const _AppleStyleMenuTile(
+                  icon: Icons.help_outline,
+                  title: "Help & Support",
+                  isLast: true,
+                ),
               ],
             ),
           ),
@@ -267,23 +313,41 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 32),
                 Container(
                   padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(color: brandTeal.withOpacity(0.1), shape: BoxShape.circle),
-                  child: const Icon(Icons.group_add, size: 40, color: brandTeal),
+                  decoration: BoxDecoration(
+                    color: brandTeal.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.group_add,
+                    size: 40,
+                    color: brandTeal,
+                  ),
                 ),
                 const SizedBox(height: 24),
                 const Text(
                   "Invite Friends, Earn RM5!",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, letterSpacing: -0.5),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: -0.5,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   "Share your code. When a friend signs up and completes their first paid booking, you both get an RM5 voucher.",
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.grey[600], fontSize: 15, height: 1.4),
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 15,
+                    height: 1.4,
+                  ),
                 ),
                 const SizedBox(height: 32),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade100, // Flat grey
                     borderRadius: BorderRadius.circular(16),
@@ -293,25 +357,44 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       const Text(
                         "ALEX-PAW-24",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.5, color: brandTeal),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.5,
+                          color: brandTeal,
+                        ),
                       ),
                       InkWell(
                         onTap: () {
-                          Clipboard.setData(const ClipboardData(text: "ALEX-PAW-24"));
+                          Clipboard.setData(
+                            const ClipboardData(text: "ALEX-PAW-24"),
+                          );
                           Navigator.pop(context); // Close sheet on copy
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: const Text("Referral code copied!", style: TextStyle(fontWeight: FontWeight.bold)),
+                              content: const Text(
+                                "Referral code copied!",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               behavior: SnackBarBehavior.floating,
                               backgroundColor: brandTeal,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
                           );
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(color: brandTeal.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
-                          child: const Icon(Icons.copy, color: brandTeal, size: 20),
+                          decoration: BoxDecoration(
+                            color: brandTeal.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Icon(
+                            Icons.copy,
+                            color: brandTeal,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ],
@@ -327,9 +410,17 @@ class ProfileScreen extends StatelessWidget {
                       backgroundColor: brandTeal, // Changed to brand color
                       foregroundColor: Colors.white,
                       elevation: 0,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
-                    child: const Text("Share Code", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    child: const Text(
+                      "Share Code",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -347,7 +438,8 @@ class _AppleStyleRewardCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
-  final Color color; // Changed from MaterialColor to Color for exact hex matching
+  final Color
+  color; // Changed from MaterialColor to Color for exact hex matching
   final VoidCallback onTap;
 
   const _AppleStyleRewardCard({
@@ -375,13 +467,30 @@ class _AppleStyleRewardCard extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+              ),
               child: Icon(icon, color: color, size: 24),
             ),
             const SizedBox(height: 16),
-            Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15, letterSpacing: -0.3)),
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 15,
+                letterSpacing: -0.3,
+              ),
+            ),
             const SizedBox(height: 4),
-            Text(subtitle, style: TextStyle(color: color.withOpacity(0.8), fontSize: 13, fontWeight: FontWeight.w600)),
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: color.withOpacity(0.8),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         ),
       ),
@@ -403,7 +512,9 @@ class _AppleStylePetAvatar extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 36,
-            backgroundColor: ProfileScreen.brandOrange.withOpacity(0.1), // Brand Orange tinted background
+            backgroundColor: ProfileScreen.brandOrange.withOpacity(
+              0.1,
+            ), // Brand Orange tinted background
             child: Icon(
               type == "Dog" ? Icons.pets : Icons.cruelty_free,
               size: 32,
@@ -411,7 +522,10 @@ class _AppleStylePetAvatar extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          Text(
+            name,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
         ],
       ),
     );
@@ -432,13 +546,24 @@ class _AppleStyleAddPetButton extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey.shade50,
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.grey.shade300, width: 1.5, style: BorderStyle.solid),
+              border: Border.all(
+                color: Colors.grey.shade300,
+                width: 1.5,
+                style: BorderStyle.solid,
+              ),
             ),
             child: const Icon(Icons.add, size: 28, color: Colors.grey),
           ),
         ),
         const SizedBox(height: 10),
-        const Text("Add Pet", style: TextStyle(fontWeight: FontWeight.w600, color: Colors.grey, fontSize: 14)),
+        const Text(
+          "Add Pet",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
+            fontSize: 14,
+          ),
+        ),
       ],
     );
   }
@@ -471,12 +596,21 @@ class _AppleStyleMenuTile extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: BorderRadius.circular(10)), // Flat icon background
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(10),
+              ), // Flat icon background
               child: Icon(icon, color: Colors.grey[700], size: 20),
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: Text(title, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
+              ),
             ),
             const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
           ],

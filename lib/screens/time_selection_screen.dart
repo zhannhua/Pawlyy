@@ -24,16 +24,31 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
 
   final List<DateTime> _availableDates = List.generate(
     7,
-        (index) => DateTime.now().add(Duration(days: index)),
+    (index) => DateTime.now().add(Duration(days: index)),
   );
 
   final List<String> _morningSlots = ["09:00 AM", "10:30 AM", "11:00 AM"];
-  final List<String> _afternoonSlots = ["01:00 PM", "02:30 PM", "04:00 PM", "05:00 PM"];
+  final List<String> _afternoonSlots = [
+    "01:00 PM",
+    "02:30 PM",
+    "04:00 PM",
+    "05:00 PM",
+  ];
 
   String _getMonthYear(DateTime date) {
     const months = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
     return "${months[date.month - 1]} ${date.year}";
   }
@@ -50,7 +65,9 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border(top: BorderSide(color: Colors.grey.shade200, width: 1)),
+          border: Border(
+            top: BorderSide(color: Colors.grey.shade200, width: 1),
+          ),
         ),
         child: SafeArea(
           child: Row(
@@ -62,7 +79,11 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
                 children: [
                   Text(
                     "${widget.selectedServiceCount} items selected",
-                    style: TextStyle(color: Colors.grey[500], fontSize: 13, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      color: Colors.grey[500],
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   const SizedBox(height: 2),
                   Text(
@@ -77,26 +98,41 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
                 ],
               ),
               ElevatedButton(
-                onPressed: _selectedTime == null ? null : () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text("Booking Confirmed! 🎉", style: TextStyle(fontWeight: FontWeight.bold)),
-                      behavior: SnackBarBehavior.floating,
-                      backgroundColor: brandTeal,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    ),
-                  );
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
+                onPressed: _selectedTime == null
+                    ? null
+                    : () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text(
+                              "Booking Confirmed! 🎉",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: brandTeal,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        );
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black87,
                   foregroundColor: Colors.white,
                   elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
-                child: const Text("Confirm", style: TextStyle(fontWeight: FontWeight.bold)),
+                child: const Text(
+                  "Confirm",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ],
           ),
@@ -115,7 +151,11 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
                 currentMonthYear,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900, letterSpacing: -0.5),
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -0.5,
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -157,7 +197,9 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
                           Text(
                             _getWeekDay(date.weekday),
                             style: TextStyle(
-                              color: isSelected ? Colors.white.withOpacity(0.8) : Colors.grey[500],
+                              color: isSelected
+                                  ? Colors.white.withOpacity(0.8)
+                                  : Colors.grey[500],
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                             ),
@@ -194,11 +236,23 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text("Morning Slots", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+                    const Text(
+                      "Morning Slots",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     _buildTimeSlotGrid(_morningSlots),
                     const SizedBox(height: 32),
-                    const Text("Afternoon Slots", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900)),
+                    const Text(
+                      "Afternoon Slots",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
                     const SizedBox(height: 16),
                     _buildTimeSlotGrid(_afternoonSlots),
                   ],
@@ -220,7 +274,10 @@ class _TimeSelectionScreenState extends State<TimeSelectionScreen> {
             icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black87),
             onPressed: () => Navigator.pop(context),
           ),
-          const Text("Select Time", style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900)),
+          const Text(
+            "Select Time",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
+          ),
         ],
       ),
     );

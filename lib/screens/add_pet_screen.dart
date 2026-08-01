@@ -59,7 +59,6 @@ class _AddPetScreenState extends State<AddPetScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white, // Ultra-clean pure white background
-
       // 1. Sleek Floating Bottom Bar
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -71,7 +70,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
               color: Colors.black.withOpacity(0.04),
               blurRadius: 20,
               offset: const Offset(0, -5),
-            )
+            ),
           ],
         ),
         child: SafeArea(
@@ -83,7 +82,9 @@ class _AddPetScreenState extends State<AddPetScreen> {
                   SnackBar(
                     content: const Text('Pet profile saved! 🐾'),
                     behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     backgroundColor: Colors.green.shade600,
                   ),
                 );
@@ -93,7 +94,9 @@ class _AddPetScreenState extends State<AddPetScreen> {
                   SnackBar(
                     content: const Text('Please select a birthday'),
                     behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     backgroundColor: Colors.red.shade600,
                   ),
                 );
@@ -108,7 +111,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            child: const Text("Save Pet Profile", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            child: const Text(
+              "Save Pet Profile",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
           ),
         ),
       ),
@@ -124,7 +130,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0,
+                    vertical: 8.0,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -137,12 +146,21 @@ class _AddPetScreenState extends State<AddPetScreen> {
                               width: 100,
                               height: 100,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.primary.withOpacity(0.1),
                                 shape: BoxShape.circle,
-                                border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.2), width: 2),
+                                border: Border.all(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.primary.withOpacity(0.2),
+                                  width: 2,
+                                ),
                               ),
                               child: Icon(
-                                _selectedSpecies == "Dog" ? Icons.pets : Icons.cruelty_free,
+                                _selectedSpecies == "Dog"
+                                    ? Icons.pets
+                                    : Icons.cruelty_free,
                                 size: 45,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -152,9 +170,16 @@ class _AddPetScreenState extends State<AddPetScreen> {
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.primary,
                                 shape: BoxShape.circle,
-                                border: Border.all(color: Colors.white, width: 3),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 3,
+                                ),
                               ),
-                              child: const Icon(Icons.camera_alt, color: Colors.white, size: 16),
+                              child: const Icon(
+                                Icons.camera_alt,
+                                color: Colors.white,
+                                size: 16,
+                              ),
                             ),
                           ],
                         ),
@@ -167,15 +192,25 @@ class _AddPetScreenState extends State<AddPetScreen> {
                       Row(
                         children: [
                           Expanded(
-                            child: _buildChoiceChip("Dog", Icons.pets, _selectedSpecies == "Dog", () {
-                              setState(() => _selectedSpecies = "Dog");
-                            }),
+                            child: _buildChoiceChip(
+                              "Dog",
+                              Icons.pets,
+                              _selectedSpecies == "Dog",
+                              () {
+                                setState(() => _selectedSpecies = "Dog");
+                              },
+                            ),
                           ),
                           const SizedBox(width: 16),
                           Expanded(
-                            child: _buildChoiceChip("Cat", Icons.cruelty_free, _selectedSpecies == "Cat", () {
-                              setState(() => _selectedSpecies = "Cat");
-                            }),
+                            child: _buildChoiceChip(
+                              "Cat",
+                              Icons.cruelty_free,
+                              _selectedSpecies == "Cat",
+                              () {
+                                setState(() => _selectedSpecies = "Cat");
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -187,7 +222,9 @@ class _AddPetScreenState extends State<AddPetScreen> {
                       TextFormField(
                         controller: _nameController,
                         decoration: _modernInputDecoration("e.g., Milo"),
-                        validator: (value) => value == null || value.isEmpty ? 'Please enter a name' : null,
+                        validator: (value) => value == null || value.isEmpty
+                            ? 'Please enter a name'
+                            : null,
                       ),
                       const SizedBox(height: 24),
 
@@ -196,8 +233,12 @@ class _AddPetScreenState extends State<AddPetScreen> {
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _breedController,
-                        decoration: _modernInputDecoration("e.g., Golden Retriever"),
-                        validator: (value) => value == null || value.isEmpty ? 'Please enter a breed' : null,
+                        decoration: _modernInputDecoration(
+                          "e.g., Golden Retriever",
+                        ),
+                        validator: (value) => value == null || value.isEmpty
+                            ? 'Please enter a breed'
+                            : null,
                       ),
                       const SizedBox(height: 24),
 
@@ -212,7 +253,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
                                 _buildSectionLabel("Gender"),
                                 const SizedBox(height: 8),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 4,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade100,
                                     borderRadius: BorderRadius.circular(16),
@@ -221,16 +265,27 @@ class _AddPetScreenState extends State<AddPetScreen> {
                                     child: DropdownButton<String>(
                                       value: _selectedGender,
                                       isExpanded: true,
-                                      icon: Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade600),
-                                      style: const TextStyle(color: Colors.black87, fontSize: 16, fontWeight: FontWeight.w500),
-                                      items: ["Male", "Female"].map((String value) {
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down,
+                                        color: Colors.grey.shade600,
+                                      ),
+                                      style: const TextStyle(
+                                        color: Colors.black87,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      items: ["Male", "Female"].map((
+                                        String value,
+                                      ) {
                                         return DropdownMenuItem<String>(
                                           value: value,
                                           child: Text(value),
                                         );
                                       }).toList(),
                                       onChanged: (newValue) {
-                                        setState(() => _selectedGender = newValue!);
+                                        setState(
+                                          () => _selectedGender = newValue!,
+                                        );
                                       },
                                     ),
                                   ),
@@ -247,9 +302,17 @@ class _AddPetScreenState extends State<AddPetScreen> {
                                 const SizedBox(height: 8),
                                 TextFormField(
                                   controller: _weightController,
-                                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                  decoration: _modernInputDecoration("e.g., 5.2"),
-                                  validator: (value) => value == null || value.isEmpty ? 'Required' : null,
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                        decimal: true,
+                                      ),
+                                  decoration: _modernInputDecoration(
+                                    "e.g., 5.2",
+                                  ),
+                                  validator: (value) =>
+                                      value == null || value.isEmpty
+                                      ? 'Required'
+                                      : null,
                                 ),
                               ],
                             ),
@@ -265,7 +328,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
                         onTap: () => _selectDate(context),
                         borderRadius: BorderRadius.circular(16),
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 18,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade100,
                             borderRadius: BorderRadius.circular(16),
@@ -278,12 +344,18 @@ class _AddPetScreenState extends State<AddPetScreen> {
                                     ? "Select Approximate Date"
                                     : "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}",
                                 style: TextStyle(
-                                  color: _selectedDate == null ? Colors.grey.shade500 : Colors.black87,
+                                  color: _selectedDate == null
+                                      ? Colors.grey.shade500
+                                      : Colors.black87,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              Icon(Icons.calendar_today, color: Colors.grey.shade600, size: 20),
+                              Icon(
+                                Icons.calendar_today,
+                                color: Colors.grey.shade600,
+                                size: 20,
+                              ),
                             ],
                           ),
                         ),
@@ -341,7 +413,11 @@ class _AddPetScreenState extends State<AddPetScreen> {
   InputDecoration _modernInputDecoration(String hint) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 15, fontWeight: FontWeight.w500),
+      hintStyle: TextStyle(
+        color: Colors.grey.shade400,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+      ),
       filled: true,
       fillColor: Colors.grey.shade100,
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
@@ -351,7 +427,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5),
+        borderSide: BorderSide(
+          color: Theme.of(context).colorScheme.primary,
+          width: 1.5,
+        ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
@@ -361,27 +440,38 @@ class _AddPetScreenState extends State<AddPetScreen> {
   }
 
   // Animated Modern Choice Chips
-  Widget _buildChoiceChip(String label, IconData icon, bool isSelected, VoidCallback onTap) {
+  Widget _buildChoiceChip(
+    String label,
+    IconData icon,
+    bool isSelected,
+    VoidCallback onTap,
+  ) {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: isSelected ? Theme.of(context).colorScheme.primary : Colors.grey.shade50,
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : Colors.grey.shade50,
           border: Border.all(
-            color: isSelected ? Theme.of(context).colorScheme.primary : Colors.grey.shade200,
+            color: isSelected
+                ? Theme.of(context).colorScheme.primary
+                : Colors.grey.shade200,
             width: 1.5,
           ),
           borderRadius: BorderRadius.circular(16),
           boxShadow: isSelected
               ? [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            )
-          ]
+                  BoxShadow(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
               : [],
         ),
         child: Column(

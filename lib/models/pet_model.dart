@@ -26,22 +26,26 @@ class Pet {
       'species': species,
       'breed': breed,
       'gender': gender,
-      'birthday': birthday.toIso8601String(),
+      'birth_date': birthday.toIso8601String().split('T').first,
       'weight': weight,
-      'imageUrl': imageUrl,
+      'image_url': imageUrl,
     };
   }
 
   factory Pet.fromMap(Map<String, dynamic> map) {
     return Pet(
-      id: map['id'],
-      name: map['name'],
-      species: map['species'],
-      breed: map['breed'],
-      gender: map['gender'],
-      birthday: DateTime.parse(map['birthday']),
-      weight: map['weight'].toDouble(),
-      imageUrl: map['imageUrl'],
+      id: map['id'] as String,
+      name: map['name'] as String,
+      species: map['species'] as String? ?? 'Dog',
+      breed: map['breed'] as String? ?? 'Mixed breed',
+      gender: map['gender'] as String? ?? 'Unknown',
+      birthday:
+          DateTime.tryParse(
+            (map['birth_date'] ?? map['birthday'] ?? '').toString(),
+          ) ??
+          DateTime.now(),
+      weight: (map['weight'] as num?)?.toDouble() ?? 0,
+      imageUrl: (map['image_url'] ?? map['imageUrl'] ?? '') as String,
     );
   }
 }

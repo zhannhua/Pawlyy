@@ -24,10 +24,7 @@ class ServiceCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 50,
-              ),
+              Icon(icon, size: 50),
               const SizedBox(height: 12),
               Text(
                 title,

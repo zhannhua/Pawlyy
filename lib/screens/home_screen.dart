@@ -26,25 +26,44 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     // Location Pill
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
-                          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4, offset: const Offset(0, 2))
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.02),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
                         ],
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.location_on, color: Colors.grey.shade400, size: 16),
+                          Icon(
+                            Icons.location_on,
+                            color: Colors.grey.shade400,
+                            size: 16,
+                          ),
                           const SizedBox(width: 6),
                           Text(
                             "Petaling Jaya, Selangor",
-                            style: TextStyle(fontSize: 12, color: Colors.black87, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           const SizedBox(width: 4),
-                          Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade400, size: 16),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.grey.shade400,
+                            size: 16,
+                          ),
                         ],
                       ),
                     ),
@@ -57,10 +76,18 @@ class HomeScreen extends StatelessWidget {
                             color: Colors.white,
                             shape: BoxShape.circle,
                             boxShadow: [
-                              BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 4, offset: const Offset(0, 2))
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.02),
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
+                              ),
                             ],
                           ),
-                          child: const Icon(Icons.notifications_outlined, color: Colors.black87, size: 22),
+                          child: const Icon(
+                            Icons.notifications_outlined,
+                            color: Colors.black87,
+                            size: 22,
+                          ),
                         ),
                         Positioned(
                           top: 0,
@@ -92,7 +119,12 @@ class HomeScreen extends StatelessWidget {
                     // Welcome Title
                     const Text(
                       "Welcome, Alex",
-                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900, letterSpacing: -1.0, color: Colors.black87),
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -1.0,
+                        color: Colors.black87,
+                      ),
                     ),
                     const SizedBox(height: 16),
 
@@ -119,7 +151,10 @@ class HomeScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     color: Colors.green.shade400,
                                     shape: BoxShape.circle,
-                                    border: Border.all(color: Colors.white, width: 3),
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 3,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -134,12 +169,20 @@ class HomeScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(16),
-                              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4))],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.03),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
                             ),
                             child: Row(
                               children: [
                                 ClipRRect(
-                                  borderRadius: const BorderRadius.horizontal(left: Radius.circular(16)),
+                                  borderRadius: const BorderRadius.horizontal(
+                                    left: Radius.circular(16),
+                                  ),
                                   child: Image.network(
                                     'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=200&auto=format&fit=crop', // Golden retriever puppy
                                     width: 80,
@@ -150,12 +193,28 @@ class HomeScreen extends StatelessWidget {
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Good morning, Alex!", style: TextStyle(color: Colors.grey.shade600, fontSize: 12, fontWeight: FontWeight.w500)),
+                                      Text(
+                                        "Good morning, Alex!",
+                                        style: TextStyle(
+                                          color: Colors.grey.shade600,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                       const SizedBox(height: 2),
-                                      const Text("Milo is looking\nfantastic today! 👋", style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14, height: 1.1, color: Colors.black87)),
+                                      const Text(
+                                        "Milo is looking\nfantastic today! 👋",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 14,
+                                          height: 1.1,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -173,12 +232,21 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         const Text(
                           "Today's Care",
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, letterSpacing: -0.5),
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -0.5,
+                          ),
                         ),
                         TextButton(
                           onPressed: () {},
-                          style: TextButton.styleFrom(foregroundColor: brandTeal),
-                          child: const Text("View All", style: TextStyle(fontWeight: FontWeight.w700)),
+                          style: TextButton.styleFrom(
+                            foregroundColor: brandTeal,
+                          ),
+                          child: const Text(
+                            "View All",
+                            style: TextStyle(fontWeight: FontWeight.w700),
+                          ),
                         ),
                       ],
                     ),
@@ -191,7 +259,8 @@ class HomeScreen extends StatelessWidget {
                           child: _RichTrackerCard(
                             title: "Breakfast",
                             time: "08:00 AM",
-                            imageUrl: 'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?q=80&w=300&auto=format&fit=crop', // Bowl placeholder
+                            imageUrl:
+                                'https://images.unsplash.com/photo-1589924691995-400dc9ecc119?q=80&w=300&auto=format&fit=crop', // Bowl placeholder
                             subtitle: "Nourishing Breakfast",
                             statusText: "Completed",
                             statusTime: "8:05 AM",
@@ -203,7 +272,8 @@ class HomeScreen extends StatelessWidget {
                           child: _RichTrackerCard(
                             title: "Evening Walk",
                             time: "05:30 PM",
-                            imageUrl: 'https://images.unsplash.com/photo-1517164850305-99a3e65bb47e?q=80&w=300&auto=format&fit=crop', // Park walk placeholder
+                            imageUrl:
+                                'https://images.unsplash.com/photo-1517164850305-99a3e65bb47e?q=80&w=300&auto=format&fit=crop', // Park walk placeholder
                             subtitle: "Scenic Walk",
                             statusText: "45 mins planned",
                             statusTime: "Active Tracker",
@@ -217,17 +287,46 @@ class HomeScreen extends StatelessWidget {
                     // Explore Services
                     const Text(
                       "Explore Services",
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, letterSpacing: -0.5),
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -0.5,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start, // Align to top to handle text wrapping
+                      crossAxisAlignment: CrossAxisAlignment
+                          .start, // Align to top to handle text wrapping
                       children: const [
-                        Expanded(child: _AppleStyleCategoryButton(title: "Grooming\nExpert Grooming", icon: Icons.content_cut, color: Colors.blueGrey)),
-                        Expanded(child: _AppleStyleCategoryButton(title: "Pet Hotel\nLuxury Pet Hotel", icon: Icons.hotel, color: Colors.brown)),
-                        Expanded(child: _AppleStyleCategoryButton(title: "Vet Clinic\nTop Vet Care", icon: Icons.local_hospital, color: Color(0xFF2E8C9A))),
-                        Expanded(child: _AppleStyleCategoryButton(title: "Pet Store\nEssentials Shop", icon: Icons.shopping_cart, color: Color(0xFFF5A524))),
+                        Expanded(
+                          child: _AppleStyleCategoryButton(
+                            title: "Grooming\nExpert Grooming",
+                            icon: Icons.content_cut,
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+                        Expanded(
+                          child: _AppleStyleCategoryButton(
+                            title: "Pet Hotel\nLuxury Pet Hotel",
+                            icon: Icons.hotel,
+                            color: Colors.brown,
+                          ),
+                        ),
+                        Expanded(
+                          child: _AppleStyleCategoryButton(
+                            title: "Vet Clinic\nTop Vet Care",
+                            icon: Icons.local_hospital,
+                            color: Color(0xFF2E8C9A),
+                          ),
+                        ),
+                        Expanded(
+                          child: _AppleStyleCategoryButton(
+                            title: "Pet Store\nEssentials Shop",
+                            icon: Icons.shopping_cart,
+                            color: Color(0xFFF5A524),
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 32),
@@ -261,7 +360,10 @@ class HomeScreen extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(12),
-                decoration: const BoxDecoration(color: brandTeal, shape: BoxShape.circle),
+                decoration: const BoxDecoration(
+                  color: brandTeal,
+                  shape: BoxShape.circle,
+                ),
                 child: const Icon(Icons.shield, color: Colors.white, size: 24),
               ),
               const SizedBox(width: 16),
@@ -269,12 +371,23 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Verified Partner Network", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: Colors.black87, letterSpacing: -0.3)),
+                    Text(
+                      "Verified Partner Network",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 16,
+                        color: Colors.black87,
+                        letterSpacing: -0.3,
+                      ),
+                    ),
                     SizedBox(height: 8),
                     // Simulated mini logos (replace with real Image assets later)
                     Row(
                       children: [
-                        _MiniLogo(icon: Icons.local_hospital, color: Colors.blue),
+                        _MiniLogo(
+                          icon: Icons.local_hospital,
+                          color: Colors.blue,
+                        ),
                         SizedBox(width: 8),
                         _MiniLogo(icon: Icons.hotel, color: Colors.orange),
                         SizedBox(width: 8),
@@ -282,7 +395,7 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(width: 8),
                         _MiniLogo(icon: Icons.content_cut, color: Colors.teal),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -291,7 +404,11 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             "Verified for safety & quality. Book with confidence.",
-            style: TextStyle(color: Colors.black87.withOpacity(0.8), fontSize: 13, fontWeight: FontWeight.w500),
+            style: TextStyle(
+              color: Colors.black87.withOpacity(0.8),
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ],
       ),
@@ -330,7 +447,13 @@ class _RichTrackerCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10, offset: const Offset(0, 4))],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -346,17 +469,39 @@ class _RichTrackerCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: Colors.black87, letterSpacing: -0.5)),
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 16,
+                          color: Colors.black87,
+                          letterSpacing: -0.5,
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text(time, style: TextStyle(fontSize: 12, color: Colors.grey.shade600, fontWeight: FontWeight.w600)),
+                      Text(
+                        time,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 if (isCompleted)
                   Container(
                     padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(color: HomeScreen.brandTeal, shape: BoxShape.circle),
-                    child: const Icon(Icons.check, color: Colors.white, size: 14),
+                    decoration: const BoxDecoration(
+                      color: HomeScreen.brandTeal,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 14,
+                    ),
                   ),
               ],
             ),
@@ -381,31 +526,54 @@ class _RichTrackerCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(subtitle, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 14, color: Colors.black87, letterSpacing: -0.3), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14,
+                    color: Colors.black87,
+                    letterSpacing: -0.3,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 const SizedBox(height: 4),
                 Row(
                   children: [
                     Text(
-                        statusText,
-                        style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700,
-                            color: isCompleted ? HomeScreen.brandTeal : Colors.grey.shade500
-                        )
+                      statusText,
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: isCompleted
+                            ? HomeScreen.brandTeal
+                            : Colors.grey.shade500,
+                      ),
                     ),
                     if (isCompleted)
                       Expanded(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(statusTime, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.black87)),
+                            Text(
+                              statusTime,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black87,
+                              ),
+                            ),
                             const SizedBox(width: 4),
-                            const Icon(Icons.check, color: HomeScreen.brandTeal, size: 12),
+                            const Icon(
+                              Icons.check,
+                              color: HomeScreen.brandTeal,
+                              size: 12,
+                            ),
                           ],
                         ),
                       ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -437,14 +605,18 @@ class _AppleStyleCategoryButton extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start, // Changed to start so text aligns perfectly
+        mainAxisAlignment: MainAxisAlignment
+            .start, // Changed to start so text aligns perfectly
         children: [
           // The specific Double-Ring border style
           Container(
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.brown.shade100, width: 1.5), // Outer ring
+              border: Border.all(
+                color: Colors.brown.shade100,
+                width: 1.5,
+              ), // Outer ring
             ),
             child: Container(
               padding: const EdgeInsets.all(16),
@@ -458,13 +630,23 @@ class _AppleStyleCategoryButton extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             mainTitle,
-            style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: Colors.black87, letterSpacing: -0.3),
+            style: const TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: 13,
+              color: Colors.black87,
+              letterSpacing: -0.3,
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 2),
           Text(
             subTitle,
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 11, color: Colors.grey.shade600, height: 1.2),
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 11,
+              color: Colors.grey.shade600,
+              height: 1.2,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
