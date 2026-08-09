@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../core/app_config.dart';
+
 class AuthController extends ChangeNotifier {
   AuthController(this._client) {
     _session = _client.auth.currentSession;
@@ -44,6 +46,7 @@ class AuthController extends ChangeNotifier {
       email: email.trim(),
       password: password,
       data: {'display_name': displayName.trim(), 'phone': phone.trim()},
+      emailRedirectTo: AppConfig.authRedirectUrl,
     );
     return response.session == null;
   }
@@ -51,11 +54,15 @@ class AuthController extends ChangeNotifier {
   Future<void> sendPasswordReset(String email) async {
     await _client.auth.resetPasswordForEmail(
       email.trim(),
-      redirectTo: kIsWeb
-          ? Uri.base.origin
-          : 'io.supabase.flutter://login-callback/',
+      redirectTo: AppConfig.authRedirectUrl,
     );
   }
+
+  Future<void> resendEmailConfirmation(String email) => _client.auth.resend(
+    type: OtpType.signup,
+    email: email.trim(),
+    emailRedirectTo: AppConfig.authRedirectUrl,
+  );
 
   Future<void> updatePassword(String password) async {
     await _client.auth.updateUser(UserAttributes(password: password));

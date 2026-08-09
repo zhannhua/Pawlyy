@@ -60,6 +60,7 @@ class CareTask {
 class ServiceListing {
   const ServiceListing({
     required this.id,
+    required this.providerId,
     required this.name,
     required this.description,
     required this.serviceType,
@@ -69,9 +70,14 @@ class ServiceListing {
     required this.city,
     required this.rating,
     required this.isVerified,
+    this.isActive = true,
+    required this.address,
+    required this.providerDescription,
+    required this.coverUrl,
   });
 
   final String id;
+  final String providerId;
   final String name;
   final String description;
   final String serviceType;
@@ -81,6 +87,10 @@ class ServiceListing {
   final String city;
   final num rating;
   final bool isVerified;
+  final bool isActive;
+  final String address;
+  final String providerDescription;
+  final String coverUrl;
 
   factory ServiceListing.fromMap(Map<String, dynamic> map) {
     final rawProvider = map['provider'] ?? map['service_providers'];
@@ -89,6 +99,7 @@ class ServiceListing {
         : const <String, dynamic>{};
     return ServiceListing(
       id: map['id'] as String,
+      providerId: map['provider_id'] as String,
       name: map['name'] as String,
       description: (map['description'] ?? '') as String,
       serviceType: (map['service_type'] ?? 'grooming') as String,
@@ -98,6 +109,10 @@ class ServiceListing {
       city: (provider['city'] ?? 'Kuala Lumpur') as String,
       rating: (provider['rating'] as num?) ?? 0,
       isVerified: (provider['is_verified'] ?? false) as bool,
+      isActive: (map['is_active'] ?? true) as bool,
+      address: (provider['address'] ?? '') as String,
+      providerDescription: (provider['description'] ?? '') as String,
+      coverUrl: (provider['cover_url'] ?? '') as String,
     );
   }
 }
@@ -107,16 +122,91 @@ class ServiceSlot {
     required this.id,
     required this.startsAt,
     required this.capacity,
+    this.isActive = true,
   });
 
   final String id;
   final DateTime startsAt;
   final int capacity;
+  final bool isActive;
 
   factory ServiceSlot.fromMap(Map<String, dynamic> map) => ServiceSlot(
     id: map['id'] as String,
     startsAt: DateTime.parse(map['starts_at'] as String).toLocal(),
     capacity: (map['capacity'] as num?)?.toInt() ?? 1,
+    isActive: (map['is_active'] ?? true) as bool,
+  );
+}
+
+class ProviderProfile {
+  const ProviderProfile({
+    required this.id,
+    required this.name,
+    required this.city,
+    required this.address,
+    required this.phone,
+    required this.description,
+    required this.coverUrl,
+    required this.isVerified,
+    required this.isActive,
+    required this.rating,
+  });
+
+  final String id;
+  final String name;
+  final String city;
+  final String address;
+  final String phone;
+  final String description;
+  final String coverUrl;
+  final bool isVerified;
+  final bool isActive;
+  final num rating;
+
+  factory ProviderProfile.fromMap(Map<String, dynamic> map) => ProviderProfile(
+    id: map['id'] as String,
+    name: (map['name'] ?? '') as String,
+    city: (map['city'] ?? '') as String,
+    address: (map['address'] ?? '') as String,
+    phone: (map['phone'] ?? '') as String,
+    description: (map['description'] ?? '') as String,
+    coverUrl: (map['cover_url'] ?? '') as String,
+    isVerified: (map['is_verified'] ?? false) as bool,
+    isActive: (map['is_active'] ?? true) as bool,
+    rating: (map['rating'] as num?) ?? 0,
+  );
+}
+
+class MerchantBooking {
+  const MerchantBooking({
+    required this.id,
+    required this.customerName,
+    required this.petName,
+    required this.petSpecies,
+    required this.serviceName,
+    required this.startsAt,
+    required this.status,
+    required this.notes,
+  });
+
+  final String id;
+  final String customerName;
+  final String petName;
+  final String petSpecies;
+  final String serviceName;
+  final DateTime startsAt;
+  final String status;
+  final String notes;
+
+  factory MerchantBooking.fromMap(Map<String, dynamic> map) => MerchantBooking(
+    id: map['id'] as String,
+    customerName: (map['customer_name'] ?? 'Pet parent') as String,
+    petName: (map['pet_name'] ?? 'Pet') as String,
+    petSpecies: (map['pet_species'] ?? '') as String,
+    serviceName: (map['service_name'] ?? 'Pawly service') as String,
+    startsAt: DateTime.parse(map['starts_at'] as String).toLocal(),
+    status: (map['status'] ?? 'requested') as String,
+    notes: (map['notes'] ?? '') as String,
   );
 }
 

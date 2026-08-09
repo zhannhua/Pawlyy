@@ -56,6 +56,9 @@ flutter:
 
   assets:
     - assets/branding/pawly-logo.png
+    - assets/illustrations/pawly-pet-icons.png
+    - assets/images/pawly-care-real.jpg
+    - assets/images/pawly-auth-real.jpg
     - assets/images/pawly-home-hero.png
 
   # The following line ensures that the Material Icons font is

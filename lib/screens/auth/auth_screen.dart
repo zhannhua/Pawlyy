@@ -18,10 +18,12 @@ class _AuthScreenState extends State<AuthScreen> {
   final _phone = TextEditingController();
   final _email = TextEditingController();
   final _password = TextEditingController();
+  final _passwordConfirmation = TextEditingController();
   bool _isLogin = true;
   bool _isLoading = false;
   bool _showPassword = false;
   bool _awaitingEmailVerification = false;
+  bool _isResending = false;
 
   @override
   void dispose() {
@@ -29,6 +31,7 @@ class _AuthScreenState extends State<AuthScreen> {
     _phone.dispose();
     _email.dispose();
     _password.dispose();
+    _passwordConfirmation.dispose();
     super.dispose();
   }
 
@@ -122,7 +125,12 @@ class _AuthScreenState extends State<AuthScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: _awaitingEmailVerification
-                      ? _VerificationNotice(onBack: _backToSignIn)
+                      ? _VerificationNotice(
+                          email: _email.text.trim(),
+                          isResending: _isResending,
+                          onResend: _resendConfirmation,
+                          onBack: _backToSignIn,
+                        )
                       : _buildForm(),
                 ),
               ),
@@ -147,23 +155,16 @@ class _AuthScreenState extends State<AuthScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(height: 28),
-          Row(
-            children: [
-              Container(
-                height: 46,
-                width: 46,
-                decoration: const BoxDecoration(
-                  color: PawlyColors.teal,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.pets_rounded, color: Colors.white),
-              ),
-              const SizedBox(width: 12),
-              const Text(
-                'Pawly',
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900),
-              ),
-            ],
+          Semantics(
+            label: 'Pawly pet services app',
+            image: true,
+            child: Image.asset(
+              'assets/branding/pawly-logo.png',
+              width: 126,
+              height: 64,
+              alignment: Alignment.centerLeft,
+              fit: BoxFit.contain,
+            ),
           ),
           const SizedBox(height: 44),
           Text(
@@ -174,7 +175,7 @@ class _AuthScreenState extends State<AuthScreen> {
           Text(
             _isLogin
                 ? 'Sign in to manage your pets and bookings.'
-                : 'Join Malaysia’s friendly pet-care community.',
+                : 'Join Malaysia’s thoughtful pet-care community.',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 28),
@@ -249,6 +250,21 @@ class _AuthScreenState extends State<AuthScreen> {
             },
             onFieldSubmitted: (_) => _submit(),
           ),
+          if (!_isLogin) ...[
+            const SizedBox(height: 14),
+            TextFormField(
+              controller: _passwordConfirmation,
+              obscureText: !_showPassword,
+              autofillHints: const [AutofillHints.newPassword],
+              decoration: const InputDecoration(
+                labelText: 'Confirm password',
+                prefixIcon: Icon(Icons.lock_outline),
+              ),
+              validator: (value) =>
+                  value == _password.text ? null : 'Passwords do not match',
+              onFieldSubmitted: (_) => _submit(),
+            ),
+          ],
           if (_isLogin)
             Align(
               alignment: Alignment.centerRight,
@@ -304,60 +320,83 @@ class _AuthScreenState extends State<AuthScreen> {
       _isLogin = true;
     });
   }
+
+  Future<void> _resendConfirmation() async {
+    if (_email.text.trim().isEmpty) return;
+    setState(() => _isResending = true);
+    try {
+      await context.read<AuthController>().resendEmailConfirmation(_email.text);
+      if (mounted) _showMessage('A new confirmation link has been sent.');
+    } on AuthException catch (error) {
+      if (mounted) _showMessage(error.message, isError: true);
+    } finally {
+      if (mounted) setState(() => _isResending = false);
+    }
+  }
 }
 
 class _WelcomePanel extends StatelessWidget {
   const _WelcomePanel();
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: PawlyColors.teal,
-      padding: const EdgeInsets.all(56),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.pets_rounded, color: Colors.white, size: 56),
-          SizedBox(height: 28),
-          Text(
-            'Better days\nfor every paw.',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 46,
-              height: 1.04,
-              fontWeight: FontWeight.w900,
-              letterSpacing: -2,
+  Widget build(BuildContext context) => Stack(
+    fit: StackFit.expand,
+    children: [
+      Image.asset('assets/images/pawly-auth-real.jpg', fit: BoxFit.cover),
+      const ColoredBox(color: Color(0xB8093534)),
+      Padding(
+        padding: const EdgeInsets.all(56),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Text(
+              'PAWLY PET SERVICES',
+              style: TextStyle(
+                color: Color(0xE6FFFFFF),
+                fontSize: 11,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 1.5,
+              ),
             ),
-          ),
-          SizedBox(height: 20),
-          Text(
-            'Book trusted local care, organise routines, and keep your pet’s profile close at hand.',
-            style: TextStyle(
-              color: Color(0xE6FFFFFF),
-              fontSize: 18,
-              height: 1.45,
+            SizedBox(height: 14),
+            Text(
+              'Care that feels\nwell looked after.',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 46,
+                height: 1.04,
+                fontWeight: FontWeight.w800,
+                letterSpacing: -1.8,
+              ),
             ),
-          ),
-          SizedBox(height: 36),
-          _Feature(
-            icon: Icons.verified_user_outlined,
-            label: 'Verified pet-care partners',
-          ),
-          SizedBox(height: 14),
-          _Feature(
-            icon: Icons.calendar_month_outlined,
-            label: 'Simple bookings in RM',
-          ),
-          SizedBox(height: 14),
-          _Feature(
-            icon: Icons.favorite_outline,
-            label: 'Daily care in one calm place',
-          ),
-        ],
+            SizedBox(height: 18),
+            SizedBox(
+              width: 380,
+              child: Text(
+                'Find dependable local care, plan an appointment, and keep every small routine together.',
+                style: TextStyle(
+                  color: Color(0xE6FFFFFF),
+                  fontSize: 17,
+                  height: 1.45,
+                ),
+              ),
+            ),
+            SizedBox(height: 30),
+            _Feature(
+              icon: Icons.verified_outlined,
+              label: 'Verified care partners',
+            ),
+            SizedBox(height: 12),
+            _Feature(
+              icon: Icons.calendar_today_outlined,
+              label: 'Appointments in Ringgit',
+            ),
+          ],
+        ),
       ),
-    );
-  }
+    ],
+  );
 }
 
 class _Feature extends StatelessWidget {
@@ -380,8 +419,16 @@ class _Feature extends StatelessWidget {
 }
 
 class _VerificationNotice extends StatelessWidget {
-  const _VerificationNotice({required this.onBack});
+  const _VerificationNotice({
+    required this.email,
+    required this.isResending,
+    required this.onResend,
+    required this.onBack,
+  });
 
+  final String email;
+  final bool isResending;
+  final VoidCallback onResend;
   final VoidCallback onBack;
 
   @override
@@ -410,11 +457,22 @@ class _VerificationNotice extends StatelessWidget {
         style: Theme.of(context).textTheme.headlineMedium,
       ),
       const SizedBox(height: 12),
-      const Text(
-        'We sent a verification link to your inbox. Verify your email, then sign in to Pawly.',
+      Text(
+        'We sent a verification link to $email. Open it, then return here to sign in to Pawly.',
         textAlign: TextAlign.center,
       ),
       const SizedBox(height: 30),
+      OutlinedButton(
+        onPressed: isResending ? null : onResend,
+        child: isResending
+            ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              )
+            : const Text('Resend confirmation email'),
+      ),
+      const SizedBox(height: 10),
       ElevatedButton(onPressed: onBack, child: const Text('Back to sign in')),
     ],
   );

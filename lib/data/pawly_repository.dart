@@ -45,6 +45,20 @@ class PawlyRepository {
     return Pet.fromMap(result);
   }
 
+  Future<Pet> updatePet(Pet pet) async {
+    final result = await _client
+        .from('pets')
+        .update(pet.toMap()..remove('owner_id'))
+        .eq('id', pet.id)
+        .eq('owner_id', _userId)
+        .select()
+        .single();
+    return Pet.fromMap(result);
+  }
+
+  Future<void> deletePet(String petId) =>
+      _client.from('pets').delete().eq('id', petId).eq('owner_id', _userId);
+
   Future<List<CareTask>> getTodaysTasks() async {
     final now = DateTime.now();
     final start = DateTime(now.year, now.month, now.day);
@@ -89,8 +103,9 @@ class PawlyRepository {
         .from('provider_services')
         .select(
           'id, name, description, price, duration_minutes, '
-          'service_type, '
-          'provider:service_providers(name, city, rating, is_verified)',
+          'service_type, provider_id, '
+          'provider:service_providers(name, city, address, rating, is_verified, '
+          'description, cover_url)',
         )
         .order('name');
     return (result as List)
@@ -118,6 +133,9 @@ class PawlyRepository {
     );
   }
 
+  Future<void> cancelBooking(String bookingId) =>
+      _client.rpc('cancel_my_booking', params: {'p_booking_id': bookingId});
+
   Future<List<PawlyBooking>> getBookings() async {
     final result = await _client
         .from('bookings')
@@ -139,7 +157,7 @@ class PawlyRepository {
   Future<List<ServiceSlot>> getAvailableSlots(String serviceId) async {
     final result = await _client
         .from('service_slots')
-        .select('id, starts_at, capacity')
+        .select('id, starts_at, capacity, is_active')
         .eq('service_id', serviceId)
         .eq('is_active', true)
         .gte('starts_at', DateTime.now().toUtc().toIso8601String())
@@ -180,4 +198,131 @@ class PawlyRepository {
       'comment': comment.trim(),
     });
   }
+
+  Future<ProviderProfile?> getMerchantProvider() async {
+    final result = await _client
+        .from('service_providers')
+        .select(
+          'id, name, city, address, phone, rating, is_verified, is_active, '
+          'description, cover_url',
+        )
+        .eq('merchant_id', _userId)
+        .maybeSingle();
+    return result == null ? null : ProviderProfile.fromMap(result);
+  }
+
+  Future<List<ServiceListing>> getMerchantServices(String providerId) async {
+    final result = await _client
+        .from('provider_services')
+        .select(
+          'id, name, description, price, duration_minutes, service_type, '
+          'provider_id, is_active, '
+          'provider:service_providers(name, city, address, rating, is_verified, '
+          'description, cover_url)',
+        )
+        .eq('provider_id', providerId)
+        .order('name');
+    return (result as List)
+        .map(
+          (row) =>
+              ServiceListing.fromMap(Map<String, dynamic>.from(row as Map)),
+        )
+        .toList();
+  }
+
+  Future<void> saveMerchantService({
+    String? id,
+    required String providerId,
+    required String name,
+    required String description,
+    required String serviceType,
+    required num price,
+    required int durationMinutes,
+    required bool isActive,
+  }) async {
+    final payload = {
+      'provider_id': providerId,
+      'name': name.trim(),
+      'description': description.trim(),
+      'service_type': serviceType,
+      'price': price,
+      'duration_minutes': durationMinutes,
+      'is_active': isActive,
+    };
+    if (id == null) {
+      await _client.from('provider_services').insert(payload);
+    } else {
+      await _client.from('provider_services').update(payload).eq('id', id);
+    }
+  }
+
+  Future<void> deleteMerchantService(String serviceId) =>
+      _client.from('provider_services').delete().eq('id', serviceId);
+
+  Future<List<ServiceSlot>> getMerchantSlots(String serviceId) async {
+    final result = await _client
+        .from('service_slots')
+        .select('id, starts_at, capacity, is_active')
+        .eq('service_id', serviceId)
+        .order('starts_at')
+        .limit(100);
+    return (result as List)
+        .map(
+          (row) => ServiceSlot.fromMap(Map<String, dynamic>.from(row as Map)),
+        )
+        .toList();
+  }
+
+  Future<void> addMerchantSlot({
+    required String serviceId,
+    required DateTime startsAt,
+    required int capacity,
+  }) => _client.from('service_slots').insert({
+    'service_id': serviceId,
+    'starts_at': startsAt.toUtc().toIso8601String(),
+    'capacity': capacity,
+    'is_active': true,
+  });
+
+  Future<void> setMerchantSlotActive(String slotId, bool isActive) => _client
+      .from('service_slots')
+      .update({'is_active': isActive})
+      .eq('id', slotId);
+
+  Future<List<MerchantBooking>> getMerchantBookings() async {
+    final result = await _client.rpc('get_merchant_bookings');
+    return (result as List)
+        .map(
+          (row) =>
+              MerchantBooking.fromMap(Map<String, dynamic>.from(row as Map)),
+        )
+        .toList();
+  }
+
+  Future<void> updateMerchantBooking({
+    required String bookingId,
+    required String status,
+  }) => _client.rpc(
+    'update_provider_booking',
+    params: {'p_booking_id': bookingId, 'p_status': status},
+  );
+
+  Future<void> updateMerchantProvider({
+    required String name,
+    required String city,
+    required String address,
+    required String phone,
+    required String description,
+    required String coverUrl,
+  }) => _client.rpc(
+    'update_my_provider_profile',
+    params: {
+      'p_name': name,
+      'p_city': city,
+      'p_address': address,
+      'p_phone': phone,
+      'p_description': description,
+      'p_cover_url': coverUrl,
+    },
+  );
 }

@@ -1,11 +1,11 @@
 {
-    "name": "Pawly | Pet care made simple",
+    "name": "Pawly | Trusted pet care booking",
     "short_name": "Pawly",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#F6FAF9",
+    "theme_color": "#137C78",
+    "description": "Find trusted pet care, book a suitable time, and keep daily pet routines in one place.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
